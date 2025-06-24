@@ -7,6 +7,7 @@ environment:
   sdk: ^3.7.0
 
 dependencies:
+  cached_network_image: ^3.4.1
   dio: ^5.8.0+1
   flutter:
     sdk: flutter
@@ -23,3 +24,13 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/fonts/
+    - assets/svgs/
+
+  fonts:
+    - family: Sen
+      fonts:
+        - asset: assets/fonts/Sen/Sen-VariableFont_wght.ttf

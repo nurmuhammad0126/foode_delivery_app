@@ -2,26 +2,27 @@ import 'package:flutter/material.dart';
 
 class WGradientContainer extends StatelessWidget {
   final Widget child;
-  final VoidCallback onTap;
-  final double height;
+  final double? height;
+  final double? width;
   final BorderRadius? borderRadius;
   final List<Color> colors;
-  final TextStyle? textStyle;
-
+  final EdgeInsetsGeometry? padding;
   const WGradientContainer({
     super.key,
     required this.child,
-    required this.onTap,
     this.height = 56,
     this.borderRadius,
     this.colors = const [Color(0xFFFF7E95), Color(0xFFFF1843)],
-    this.textStyle,
+    this.padding,
+    this.width,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: height,
+      width: width ?? double.infinity,
+      padding: padding ?? EdgeInsets.all(12),
       alignment: Alignment.center,
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -29,7 +30,7 @@ class WGradientContainer extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: borderRadius ?? BorderRadius.circular(30),
+        borderRadius: borderRadius ?? BorderRadius.circular(32),
       ),
       child: child,
     );

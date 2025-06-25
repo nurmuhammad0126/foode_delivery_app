@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 
 class AppTextStyles {
   AppTextStyles._(); // static class
@@ -64,7 +65,7 @@ class AppTextStyles {
       fontSize: size.toDouble(),
       fontWeight: weight,
       fontFamily: _fontFamily,
-      color: Colors.black, // default
+      color: AppColors.black,
     );
   }
 }

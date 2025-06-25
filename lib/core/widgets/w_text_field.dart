@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 
+import '../constants/app_colors.dart';
+
 class WTextField extends StatefulWidget {
   final bool? hasBorderColor;
   final bool? hasClearButton;
@@ -43,6 +45,7 @@ class WTextField extends StatefulWidget {
   final Function? onTapSuffix;
   final Function()? onEditCompleted;
   final Function()? onTap;
+  final String? Function(String?)? validator;
   final int? maxlines;
   final int? minLines;
   final bool autoFocus;
@@ -56,6 +59,7 @@ class WTextField extends StatefulWidget {
   final bool? isDense;
 
   const WTextField({
+    this.validator,
     this.onFocusChange,
     this.controller,
     this.onChanged,
@@ -64,7 +68,7 @@ class WTextField extends StatefulWidget {
     this.hideCounterText,
     this.borderColor,
     this.autoFocus = false,
-    this.borderRadius = 5,
+    this.borderRadius = 32,
     this.maxlines = 1,
     this.prefixStyle,
     this.hasClearButton,
@@ -172,15 +176,24 @@ class _WTextFieldState extends State<WTextField>
             width: widget.width,
             child: DecoratedBox(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.transparent,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 60,
+                    spreadRadius: 5,
+                    offset: Offset(12, 30),
+                    color: AppColors.shadowBlue,
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(32),
+                color: AppColors.white,
               ),
               child: Stack(
                 alignment: Alignment.center,
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(widget.borderRadius),
-                    child: TextField(
+                    child: TextFormField(
+                      validator: widget.validator,
                       readOnly: widget.readonly ?? false,
                       onTap: widget.onTap,
                       textAlign: widget.textAlign,
@@ -205,17 +218,17 @@ class _WTextFieldState extends State<WTextField>
                         }
                       },
                       focusNode: focusNode,
-                      style: widget.textStyle ?? AppTextStyles.s14w400,
+                      style: widget.textStyle ?? AppTextStyles.s14w600,
                       decoration: InputDecoration(
                         isDense: widget.isDense,
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(30),
                           borderSide: BorderSide(
                             width: 1,
                             color:
                                 widget.hasError
                                     ? theme.colorScheme.error
-                                    : Colors.grey,
+                                    : AppColors.gray100,
                           ),
                         ),
                         counterText:
@@ -264,10 +277,10 @@ class _WTextFieldState extends State<WTextField>
                             color:
                                 widget.hasBorderColor != null &&
                                         !widget.hasBorderColor!
-                                    ? Colors.transparent
+                                    ? AppColors.gray100
                                     : widget.hasError
                                     ? Colors.red
-                                    : Colors.grey,
+                                    : AppColors.gray100,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
@@ -279,10 +292,10 @@ class _WTextFieldState extends State<WTextField>
                             color:
                                 widget.hasBorderColor != null &&
                                         !widget.hasBorderColor!
-                                    ? Colors.transparent
+                                    ? AppColors.gray100
                                     : widget.hasError
                                     ? Theme.of(context).colorScheme.error
-                                    : Colors.grey,
+                                    : AppColors.gray100,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -294,10 +307,10 @@ class _WTextFieldState extends State<WTextField>
                             color:
                                 widget.hasBorderColor != null &&
                                         !widget.hasBorderColor!
-                                    ? Colors.transparent
+                                    ? AppColors.gray100
                                     : widget.hasError
                                     ? Theme.of(context).colorScheme.error
-                                    : Colors.black,
+                                    : AppColors.gray100,
                           ),
                         ),
                       ),

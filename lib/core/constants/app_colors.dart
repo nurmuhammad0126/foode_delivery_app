@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._(); // static class
 
+  static const Color white = Colors.white;
+  static const Color black = Colors.black;
+  static const Color transparent = Colors.transparent;
+
   // Brand
   static const Color primary = Color(0xFFFF1843);
   static const Color primaryLight = Color(0xFFFF7E95);
@@ -11,7 +15,12 @@ class AppColors {
 
   // Neutrals / Grays
   static const Color shadow = Color(0xFFEBEEF2);
+  static final Color shadowBlue = Color(0xFF5A6CEA).withOpacity(0.1);
+
   static const Color gray = Color(0xFF6D7580);
+  static const Color darkGray = Color(0xFF2C3A4B);
+  static const Color gray100 = Color(0xFFDADEE3);
+  static const Color gray50 = Color(0xFFF6F8FB);
   static const Color background = Color(0xFFF4F6F9);
 
   // Success

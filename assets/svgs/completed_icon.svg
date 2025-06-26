@@ -1,0 +1,19 @@
+<svg width="75" height="73" viewBox="0 0 75 73" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="38.5" cy="36.5" r="28.5" fill="url(#paint0_linear_2355_54277)"/>
+<circle cx="72" cy="11" r="3" fill="#F43F5E" fill-opacity="0.8"/>
+<circle cx="8" cy="4" r="4" fill="#F43F5E" fill-opacity="0.5"/>
+<circle cx="4" cy="54" r="2" fill="#F43F5E" fill-opacity="0.7"/>
+<circle cx="67" cy="65" r="1" fill="#F43F5E" fill-opacity="0.7"/>
+<path d="M36.0236 43.6908C35.4215 43.6908 34.8194 43.4327 34.4754 42.9167L29.6589 36.7241C28.9709 35.864 29.1429 34.6599 30.003 33.9718C30.8631 33.2837 32.0672 33.4558 32.7553 34.3158L36.0236 38.5303L43.2483 29.1553C43.9364 28.2953 45.1405 28.1232 46.0006 28.8113C46.8607 29.4994 47.0327 30.7035 46.3446 31.5636L37.5717 42.9167C37.1417 43.3467 36.6256 43.6908 36.0236 43.6908Z" fill="white"/>
+<circle cx="43" cy="2" r="1" fill="#F43F5E"/>
+<circle cx="25.5" cy="71.5" r="1.5" fill="#F43F5E" fill-opacity="0.7"/>
+<circle cx="49.5" cy="69.5" r="0.5" fill="#F43F5E"/>
+<circle cx="69" cy="45" r="1" fill="#F43F5E"/>
+<circle cx="0.5" cy="30.5" r="0.5" fill="#F43F5E"/>
+<defs>
+<linearGradient id="paint0_linear_2355_54277" x1="67" y1="65.1385" x2="10" y2="8.13847" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FF1843"/>
+<stop offset="1" stop-color="#FF7E95"/>
+</linearGradient>
+</defs>
+</svg>

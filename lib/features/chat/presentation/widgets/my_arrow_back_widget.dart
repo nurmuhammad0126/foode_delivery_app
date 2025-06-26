@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 
-import '../constants/app_colors.dart';
-import '../constants/app_textstyles.dart';
-
-class WidgetArrowBackButton extends StatelessWidget {
-  final String text;
-  const WidgetArrowBackButton({super.key, required this.text});
+class MyArrowBackWidget extends StatelessWidget {
+  const MyArrowBackWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      spacing: 24.w,
       children: [
         InkWell(
           borderRadius: BorderRadius.circular(12.w),
@@ -23,7 +19,7 @@ class WidgetArrowBackButton extends StatelessWidget {
             height: 36.w,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12.w),
-              color: AppColors.primary100,
+              color: AppColors.white.withOpacity(0.3),
             ),
             child: Center(
               child: Icon(
@@ -34,7 +30,6 @@ class WidgetArrowBackButton extends StatelessWidget {
             ),
           ),
         ),
-        Text(text, style: AppTextStyles.s26w700),
       ],
     );
   }

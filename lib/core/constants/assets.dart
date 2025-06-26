@@ -8,6 +8,9 @@ class Assets {
   static const String logo = '${_imagesBase}logo.png';
   static const String splash = '${_imagesBase}splash_screen_image.png';
   static const String backgroundImage = '${_imagesBase}background_image.png';
+  static const String personImage1 = '${_imagesBase}person_image1.png';
+  static const String person = '${_imagesBase}person.png';
+  static const String rateMale = '${_imagesBase}rate_male.png';
   static const String burger = '${_imagesBase}burger.png';
 
   // SVGs
@@ -21,6 +24,9 @@ class Assets {
   static const String dropDownIcon = '${_svgsBase}drop_down_icon.svg';
   static const String calendarIcon = '${_svgsBase}calendar_icon.svg';
   static const String bellIcons = '${_svgsBase}bell_icon.svg';
+  static const String sendIcon = '${_svgsBase}send_icon.svg';
+  static const String callIcon = '${_svgsBase}call_icon.svg';
+  static const String restaurantIcon = '${_svgsBase}restaurant_icon.svg';
 
   static const String circoRestoIcon = '${_svgsBase}circo_resto_icon.svg';
   static const String cloudyRestoIcon = '${_svgsBase}cloudy_resto_icon.svg';

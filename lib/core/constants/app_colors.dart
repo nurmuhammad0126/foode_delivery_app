@@ -12,10 +12,12 @@ class AppColors {
   static const Color primaryLight = Color(0xFFFF7E95);
   static const Color primary100 = Color(0x1AF43F5E); // 10% opacity
   static const Color primary500 = Color(0x80F43F5E); // 50% opacity
-
+  static const Color redPrimary100 = Color(0xffF43F5E);
   // Neutrals / Grays
   static const Color shadow = Color(0xFFEBEEF2);
   static final Color shadowBlue = Color(0xFF5A6CEA).withOpacity(0.1);
+  static final Color neutralBlack = Color(0xff09101D);
+  static final Color neutralWhite = Color(0xff858C94);
 
   static const Color gray = Color(0xFF6D7580);
   static const Color darkGray = Color(0xFF2C3A4B);
@@ -40,4 +42,5 @@ class AppColors {
   // Reuse
   static const Color green = statusSuccess;
   static const Color yellow = warning;
+  
 }

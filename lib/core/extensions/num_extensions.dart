@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-double height = 1, width = 1, arithmetic = 1;
+// double height = 1, width = 1, arithmetic = 1;
 
 extension ExtSize on num {
   double get h => SizeUtilsExtension.instance.screenHeight * this / 812;

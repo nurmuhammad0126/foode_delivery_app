@@ -20,6 +20,7 @@ class WCachedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     final image = CachedNetworkImage(
       imageUrl: imageUrl,
       width: width,

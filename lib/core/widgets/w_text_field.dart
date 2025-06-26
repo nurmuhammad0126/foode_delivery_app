@@ -225,7 +225,7 @@ class _WTextFieldState extends State<WTextField>
                           borderRadius: BorderRadius.circular(30),
                           borderSide: BorderSide(
                             width: 1,
-                            color:
+                            color:   
                                 widget.hasError
                                     ? theme.colorScheme.error
                                     : AppColors.gray100,
@@ -277,7 +277,7 @@ class _WTextFieldState extends State<WTextField>
                             color:
                                 widget.hasBorderColor != null &&
                                         !widget.hasBorderColor!
-                                    ? AppColors.gray100
+                                    ? widget.borderColor??AppColors.gray100
                                     : widget.hasError
                                     ? Colors.red
                                     : AppColors.gray100,
@@ -292,7 +292,7 @@ class _WTextFieldState extends State<WTextField>
                             color:
                                 widget.hasBorderColor != null &&
                                         !widget.hasBorderColor!
-                                    ? AppColors.gray100
+                                    ? widget.borderColor??AppColors.gray100
                                     : widget.hasError
                                     ? Theme.of(context).colorScheme.error
                                     : AppColors.gray100,
@@ -307,7 +307,7 @@ class _WTextFieldState extends State<WTextField>
                             color:
                                 widget.hasBorderColor != null &&
                                         !widget.hasBorderColor!
-                                    ? AppColors.gray100
+                                    ? widget.borderColor??AppColors.gray100
                                     : widget.hasError
                                     ? Theme.of(context).colorScheme.error
                                     : AppColors.gray100,

@@ -12,6 +12,7 @@ class WContainerWithShadow extends StatelessWidget {
   final double? width;
   final double? height;
   final BoxShape? shape;
+  final List<BoxShadow>? shadow;
 
   const WContainerWithShadow({
     super.key,
@@ -24,6 +25,7 @@ class WContainerWithShadow extends StatelessWidget {
     this.width,
     this.height,
     this.shape,
+    this.shadow,
   });
 
   @override
@@ -39,14 +41,16 @@ class WContainerWithShadow extends StatelessWidget {
         color: color,
         borderRadius: borderRadius ?? BorderRadius.circular(12.w),
         border: border ?? Border.all(color: AppColors.gray100, width: 1.o),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 60,
-            spreadRadius: 5,
-            offset: Offset(12, 30),
-            color: AppColors.shadowBlue,
-          ),
-        ],
+        boxShadow:
+            shadow ??
+            [
+              BoxShadow(
+                blurRadius: 60,
+                spreadRadius: 5,
+                offset: Offset(12, 30),
+                color: AppColors.shadowBlue,
+              ),
+            ],
       ),
       child: child,
     );

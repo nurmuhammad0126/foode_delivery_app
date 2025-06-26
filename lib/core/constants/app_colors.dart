@@ -12,6 +12,7 @@ class AppColors {
   static const Color primaryLight = Color(0xFFFF7E95);
   static const Color primary100 = Color(0x1AF43F5E); // 10% opacity
   static const Color primary500 = Color(0x80F43F5E); // 50% opacity
+  static const Color colorForChip = Color(0xFFF43F5E); // 50% opacity
 
   // Neutrals / Grays
   static const Color shadow = Color(0xFFEBEEF2);

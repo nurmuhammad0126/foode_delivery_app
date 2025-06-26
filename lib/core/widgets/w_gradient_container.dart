@@ -7,6 +7,7 @@ class WGradientContainer extends StatelessWidget {
   final BorderRadius? borderRadius;
   final List<Color> colors;
   final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   const WGradientContainer({
     super.key,
     required this.child,
@@ -15,6 +16,7 @@ class WGradientContainer extends StatelessWidget {
     this.colors = const [Color(0xFFFF7E95), Color(0xFFFF1843)],
     this.padding,
     this.width,
+    this.margin,
   });
 
   @override
@@ -23,6 +25,7 @@ class WGradientContainer extends StatelessWidget {
       height: height,
       width: width ?? double.infinity,
       padding: padding ?? EdgeInsets.all(12),
+      margin: margin,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         gradient: LinearGradient(

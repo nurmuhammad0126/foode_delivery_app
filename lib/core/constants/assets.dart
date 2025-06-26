@@ -8,6 +8,7 @@ class Assets {
   static const String logo = '${_imagesBase}logo.png';
   static const String splash = '${_imagesBase}splash_screen_image.png';
   static const String backgroundImage = '${_imagesBase}background_image.png';
+  static const String burger = '${_imagesBase}burger.png';
 
   // SVGs
   static const String congratsCheck = '${_svgsBase}congrats_check.svg';
@@ -20,4 +21,10 @@ class Assets {
   static const String dropDownIcon = '${_svgsBase}drop_down_icon.svg';
   static const String calendarIcon = '${_svgsBase}calendar_icon.svg';
   static const String bellIcons = '${_svgsBase}bell_icon.svg';
+
+  static const String circoRestoIcon = '${_svgsBase}circo_resto_icon.svg';
+  static const String cloudyRestoIcon = '${_svgsBase}cloudy_resto_icon.svg';
+  static const String heartyRestoIcon = '${_svgsBase}haty_resto_icon.svg';
+  static const String lovyFoodIcon = '${_svgsBase}lovy_food_icon.svg';
+  static const String ractoFoodIcon = '${_svgsBase}racto_food_icon.svg';
 }

@@ -12,6 +12,8 @@ class Assets {
   static const String person = '${_imagesBase}person.png';
   static const String rateMale = '${_imagesBase}rate_male.png';
   static const String burger = '${_imagesBase}burger.png';
+  static const String personImage = '${_imagesBase}person_image.png';
+
 
   // SVGs
   static const String congratsCheck = '${_svgsBase}congrats_check.svg';

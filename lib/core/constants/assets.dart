@@ -9,6 +9,8 @@ class Assets {
   static const String splash = '${_imagesBase}splash_screen_image.png';
   static const String backgroundImage = '${_imagesBase}background_image.png';
   static const String burger = '${_imagesBase}burger.png';
+  static const String personImage = '${_imagesBase}person_image.png';
+
 
   // SVGs
   static const String congratsCheck = '${_svgsBase}congrats_check.svg';

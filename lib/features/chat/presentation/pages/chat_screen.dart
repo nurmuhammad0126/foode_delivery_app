@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/constants/assets.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
-import 'package:task_for_uicgroup/core/widgets/w_text_field.dart';
 import 'package:task_for_uicgroup/core/widgets/widget_arrow_back_button.dart';
 
 class ChatScreen extends StatefulWidget {

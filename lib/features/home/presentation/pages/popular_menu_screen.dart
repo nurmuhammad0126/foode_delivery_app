@@ -30,6 +30,7 @@ class _PopularMenuScreenState extends State<PopularMenuScreen> {
           WidgetArrowBackButton(
             text: "Popular Menu",
           ).paddingOnly(left: 24.w, right: 24.w, top: 24.w),
+
           WidgetHomeSearch(
             searchController: _searController,
           ).paddingSymmetric(horizontal: 24.w, vertical: 32.w),
@@ -78,6 +79,7 @@ class _PopularMenuScreenState extends State<PopularMenuScreen> {
               ).paddingOnly(bottom: 32.w, left: 24.w, right: 24.w);
             },
           ),
+        
         ],
       ),
     );

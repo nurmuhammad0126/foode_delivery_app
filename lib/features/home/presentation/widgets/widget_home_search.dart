@@ -23,7 +23,8 @@ class _WidgetHomeSearchState extends State<WidgetHomeSearch> {
       children: [
         Expanded(
           flex: 7,
-          child: WTextField(
+          child: 
+          WTextField(
             controller: widget.searchController,
             fillColor: AppColors.background,
             hasBorderColor: false,

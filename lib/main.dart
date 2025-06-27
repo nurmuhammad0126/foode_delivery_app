@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
-<<<<<<< HEAD
 
-import 'features/profile/presentation/pages/profile_screen.dart';
-=======
-import 'package:task_for_uicgroup/features/orders/presentation/pages/restaurant_profile_screen.dart';
->>>>>>> c9f6aeb5afc3f7f48f0b303d71ca19b11d0a61cd
-
-void main() {
+import 'features/orders/presentation/pages/favorite_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MainApp());
 }
 
@@ -17,10 +18,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeUtilsExtension.instance.init(context);
-<<<<<<< HEAD
-    return MaterialApp(home: ProfileScreen());
-=======
-    return MaterialApp(home: RestaurantProfileScreen());
->>>>>>> c9f6aeb5afc3f7f48f0b303d71ca19b11d0a61cd
+
+    return MaterialApp(home: FavoriteScreen());
   }
 }

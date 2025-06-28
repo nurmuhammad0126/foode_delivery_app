@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
+import 'package:task_for_uicgroup/features/auth/presentation/bloc/auth_bloc.dart';
 
-import 'features/orders/presentation/pages/favorite_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:task_for_uicgroup/features/auth/presentation/cubits/auth_cubits.dart';
+import 'package:task_for_uicgroup/features/auth/presentation/cubits/forget_password_cubit.dart';
+import 'package:task_for_uicgroup/features/auth/presentation/pages/splash_screen.dart';
 import 'firebase_options.dart';
-void main()async {
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MainApp());
 }
 
@@ -18,7 +21,17 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeUtilsExtension.instance.init(context);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => ForgetPasswordCubit()),
+        BlocProvider<AuthBloc>(create: (x) => AuthBloc()),
+        BlocProvider<ToggleCubit>(create: (context) => ToggleCubit()),
+        BlocProvider<PasswordVisibilityCubit>(
+          create: (context) => PasswordVisibilityCubit(),
+        ),
+      ],
 
-    return MaterialApp(home: FavoriteScreen());
+      child: MaterialApp(home: SplashPage()),
+    );
   }
 }

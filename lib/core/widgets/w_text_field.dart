@@ -195,7 +195,7 @@ class _WTextFieldState extends State<WTextField>
                     child: TextFormField(
                       validator: widget.validator,
                       readOnly: widget.readonly ?? false,
-                      onTap: widget.onTap,
+                      onTap: widget.onTap ?? () {},
                       textAlign: widget.textAlign,
                       inputFormatters: widget.textInputFormatters,
                       textInputAction: widget.textInputAction,
@@ -225,12 +225,13 @@ class _WTextFieldState extends State<WTextField>
                           borderRadius: BorderRadius.circular(30),
                           borderSide: BorderSide(
                             width: 1,
-                            color:   
+                            color:
                                 widget.hasError
                                     ? theme.colorScheme.error
                                     : AppColors.gray100,
                           ),
                         ),
+                        errorStyle: const TextStyle(fontSize: 0),
                         counterText:
                             widget.hideCounterText != null &&
                                     widget.hideCounterText!
@@ -277,7 +278,7 @@ class _WTextFieldState extends State<WTextField>
                             color:
                                 widget.hasBorderColor != null &&
                                         !widget.hasBorderColor!
-                                    ? widget.borderColor??AppColors.gray100
+                                    ? widget.borderColor ?? AppColors.gray100
                                     : widget.hasError
                                     ? Colors.red
                                     : AppColors.gray100,
@@ -292,7 +293,7 @@ class _WTextFieldState extends State<WTextField>
                             color:
                                 widget.hasBorderColor != null &&
                                         !widget.hasBorderColor!
-                                    ? widget.borderColor??AppColors.gray100
+                                    ? widget.borderColor ?? AppColors.gray100
                                     : widget.hasError
                                     ? Theme.of(context).colorScheme.error
                                     : AppColors.gray100,
@@ -307,7 +308,7 @@ class _WTextFieldState extends State<WTextField>
                             color:
                                 widget.hasBorderColor != null &&
                                         !widget.hasBorderColor!
-                                    ? widget.borderColor??AppColors.gray100
+                                    ? widget.borderColor ?? AppColors.gray100
                                     : widget.hasError
                                     ? Theme.of(context).colorScheme.error
                                     : AppColors.gray100,

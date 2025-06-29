@@ -9,6 +9,8 @@ import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
 import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
+import 'package:task_for_uicgroup/features/auth/data/datasource/local_datasource.dart';
+import 'package:task_for_uicgroup/features/auth/presentation/pages/login_screen.dart';
 import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 import 'package:task_for_uicgroup/features/home/presentation/widgets/widget_home_search.dart';
 
@@ -24,12 +26,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searController = TextEditingController();
-
+  final AuthLocalDatasource authLocalDatasource = AuthLocalDatasource();
   @override
   Widget build(BuildContext context) {
     final mediaQueryHeight = MediaQuery.of(context).size.height;
     final mediaQueryWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+
+              authLocalDatasource.removeToken();
+              // asdfasdfsdffdsdf
+              Navigator.push(context, MaterialPageRoute(builder: (x) => LoginScreen()));
+            },
+            icon: Icon(Icons.logout),
+          ),
+        ],
+      ),
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         child: Column(

@@ -8,6 +8,8 @@ class WGradientContainer extends StatelessWidget {
   final List<Color> colors;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
+  final void Function()? onTap;
+  final bool isTextVisible;
   const WGradientContainer({
     super.key,
     required this.child,
@@ -17,25 +19,41 @@ class WGradientContainer extends StatelessWidget {
     this.padding,
     this.width,
     this.margin,
+    this.onTap,
+    this.isTextVisible = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      width: width ?? double.infinity,
-      padding: padding ?? EdgeInsets.all(12),
-      margin: margin,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: colors,
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+    return InkWell(
+      borderRadius: borderRadius ?? BorderRadius.circular(32),
+      onTap: onTap ?? () {},
+      child: Container(
+        height: height,
+        width: width ?? double.infinity,
+        padding: padding ?? EdgeInsets.all(12),
+        margin: margin,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: colors,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: borderRadius ?? BorderRadius.circular(32),
         ),
-        borderRadius: borderRadius ?? BorderRadius.circular(32),
+        child:
+            isTextVisible
+                ? child
+                : const SizedBox(
+                  height: 24,
+                  width: 24,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.5,
+                    color: Colors.white,
+                  ),
+                ),
       ),
-      child: child,
     );
   }
 }

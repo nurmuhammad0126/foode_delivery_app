@@ -1,9 +1,20 @@
-part of 'chat_bloc.dart';
+import '../../data/models/chat_model.dart';
 
-@freezed
-class ChatEvent with _$ChatEvent {
-  const factory ChatEvent.fetchChat() = _FetchChat;
-  const factory ChatEvent.addData(ChatModel data) = _AddData;
-  const factory ChatEvent.sendMessage(ChatModel data) = _SendMessage;
-  const factory ChatEvent.deleteMessage(String id) = _DeleteMessage;
+abstract class ChatEvent {}
+
+class FetchChat extends ChatEvent {}
+
+class AddData extends ChatEvent {
+  final ChatModel data;
+  AddData(this.data);
+}
+
+class SendMessage extends ChatEvent {
+  final ChatModel data;
+  SendMessage(this.data);
+}
+
+class DeleteMessage extends ChatEvent {
+  final String id;
+  DeleteMessage(this.id);
 }

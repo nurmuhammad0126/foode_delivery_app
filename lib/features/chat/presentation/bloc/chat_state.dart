@@ -1,8 +1,15 @@
-part of 'chat_bloc.dart';
+import '../../data/models/chat_model.dart';
 
-@freezed
-class ChatState with _$ChatState {
-  const factory ChatState.loading() = _Loading;
-  const factory ChatState.success(List<ChatModel> chat) = _Success;
-  const factory ChatState.error(String error) = _Error;
+abstract class ChatState {}
+
+class ChatLoading extends ChatState {}
+
+class ChatSuccess extends ChatState {
+  final List<ChatModel> chatList;
+  ChatSuccess(this.chatList);
+}
+
+class ChatError extends ChatState {
+  final String message;
+  ChatError(this.message);
 }

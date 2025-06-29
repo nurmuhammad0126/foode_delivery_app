@@ -6,6 +6,7 @@ import 'package:task_for_uicgroup/features/auth/presentation/bloc/auth_bloc.dart
 import 'package:task_for_uicgroup/features/auth/presentation/cubits/auth_cubits.dart';
 import 'package:task_for_uicgroup/features/auth/presentation/cubits/forget_password_cubit.dart';
 import 'package:task_for_uicgroup/core/routes/router.dart';
+import 'package:task_for_uicgroup/features/chat/presentation/bloc/chat_bloc.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -26,6 +27,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (_) => AuthBloc()),
         BlocProvider(create: (_) => ToggleCubit()),
         BlocProvider(create: (_) => PasswordVisibilityCubit()),
+        BlocProvider(create: (_) => ChatBloc()),
       ],
       child: MaterialApp.router(
         routerConfig: appRouter,

@@ -12,6 +12,7 @@ import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/core/widgets/w_rich_text.dart';
+import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 import 'package:task_for_uicgroup/core/widgets/w_text_field.dart';
 import 'package:task_for_uicgroup/features/auth/data/model/auth_model.dart';
 import 'package:task_for_uicgroup/features/auth/presentation/bloc/auth_bloc.dart';
@@ -159,16 +160,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 20.height,
                 BlocBuilder<ToggleCubit, bool>(
                   builder: (context, isChecked) {
-                    return WGradientContainer(
-                      colors: isChecked
-                          ? [Color(0xFFFF7E95), Color(0xFFFF1843)]
-                          : [Color(0xFFFF7E95), Color(0xFFFF7E95)],
-                      isTextVisible: state is! AuthLoading,
-                      onTap: isChecked ? _signUp : () {},
-                      child: Text(
-                        "Sign up",
-                        style: AppTextStyles.s18w600
-                            .copyWith(color: AppColors.white),
+                    return WScaleAnimation(
+                        onTap: isChecked ? _signUp : () {},
+                      child: WGradientContainer(
+                        colors: isChecked
+                            ? [Color(0xFFFF7E95), Color(0xFFFF1843)]
+                            : [Color(0xFFFF7E95), Color(0xFFFF7E95)],
+                        isTextVisible: state is! AuthLoading,
+                        child: Text(
+                          "Sign up",
+                          style: AppTextStyles.s18w600
+                              .copyWith(color: AppColors.white),
+                        ),
                       ),
                     );
                   },

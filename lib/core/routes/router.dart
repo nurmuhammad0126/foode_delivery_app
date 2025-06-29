@@ -48,7 +48,7 @@ import '../../features/profile/presentation/pages/profile_screen.dart';
 
 /// GoRouter konfiguratsiyasi
 final GoRouter appRouter = GoRouter(
-  initialLocation: AppRoutesNames.splash,
+  initialLocation: AppRoutesNames.chat,
   debugLogDiagnostics: true,
 
   // Redirect funksiyasi - Foydalanuvchi holatini tekshirish uchun
@@ -374,7 +374,7 @@ extension AppRouterExtension on BuildContext {
   void goToHome() => go(AppRoutesNames.home);
 
   // Go to login
-  void goToLogin() => go(AppRoutesNames.login);
+  void goToLogin() => goNamed(AppRoutesNames.login);
 
   // Go to register
   void goToRegister() => go(AppRoutesNames.register);

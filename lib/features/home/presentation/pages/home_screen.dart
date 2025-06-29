@@ -7,6 +7,7 @@ import 'package:task_for_uicgroup/core/constants/assets.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
 import 'package:task_for_uicgroup/core/routes/route_names.dart';
+import 'package:task_for_uicgroup/core/routes/router.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/features/auth/data/datasource/local_datasource.dart';
@@ -36,10 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-
               authLocalDatasource.removeToken();
               // asdfasdfsdffdsdf
-              Navigator.push(context, MaterialPageRoute(builder: (x) => LoginScreen()));
+              context.goToLogin();
             },
             icon: Icon(Icons.logout),
           ),

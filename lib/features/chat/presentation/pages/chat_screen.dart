@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
@@ -25,7 +26,7 @@ class _ChatScreenState extends State<ChatScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           children: [
-            30.height,
+            50.height,
             WidgetArrowBackButton(text: "Chat"),
             32.height,
             WContainerWithShadow(
@@ -82,6 +83,11 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ],
               ),
+            ),
+            BlocBuilder(
+              builder: (context, state) {
+                return state.when();
+              },
             ),
           ],
         ),

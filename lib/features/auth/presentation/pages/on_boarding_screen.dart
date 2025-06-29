@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/constants/assets.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/routes/router.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
@@ -50,6 +54,7 @@ class _OnBaoardibngScreenState extends State<OnBoardingScreen> {
                   50.height,
                   WScaleAnimation(
                     onTap: () {
+                      log(",,,,,,");
                       context.goToLogin();
                     },
                     child: WGradientContainer(

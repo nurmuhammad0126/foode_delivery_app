@@ -7,7 +7,6 @@ class WScaleAnimation extends StatefulWidget {
   final Duration duration;
   final double scaleValue;
   final bool isDisabled;
-
   const WScaleAnimation({
     required this.child,
     this.onTap,

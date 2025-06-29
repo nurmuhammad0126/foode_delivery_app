@@ -29,6 +29,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: ListView(
+          clipBehavior: Clip.none,
           children: [
             24.height,
             Row(
@@ -43,10 +44,13 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                 Text("Order History", style: AppTextStyles.s24w600),
               ],
             ),
-            WidgetHomeSearch(searchController: _searController),
+            32.height,
+
+            WidgetHomeSearch(searchController: _searController, onTap: () {}),
             32.height,
 
             ListView.separated(
+              clipBehavior: Clip.none,
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: 10,

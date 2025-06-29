@@ -38,11 +38,10 @@ class _FindFoodScreenState extends State<FindFoodScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          WidgetArrowBackButton(
-            text: "Find your food",
-          ).paddingOnly(left: 24.w, right: 24.w, top: 24.w),
+          WidgetArrowBackButton(text: "Find your food").paddingOnly(top: 24.w),
           WidgetHomeSearch(
             searchController: _searController,
+            onTap: () {},
           ).paddingSymmetric(vertical: 32.w),
 
           Text("Type", style: AppTextStyles.s20w600),

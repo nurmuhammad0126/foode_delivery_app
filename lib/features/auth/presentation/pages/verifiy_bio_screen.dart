@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/assets.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_rich_text.dart';
+import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 import 'package:task_for_uicgroup/core/widgets/w_text_field.dart';
 
 import '../../../../core/constants/app_colors.dart';
@@ -141,10 +144,15 @@ class _VerifiyBioScreenState extends State<VerifiyBioScreen> {
               ),
             ),
             20.height,
-            WGradientContainer(
-              child: Text(
-                "Next",
-                style: AppTextStyles.s18w600.copyWith(color: AppColors.white),
+            WScaleAnimation(
+              onTap: () {
+                context.push(AppRoutesNames.paymentType);
+              },
+              child: WGradientContainer(
+                child: Text(
+                  "Next",
+                  style: AppTextStyles.s18w600.copyWith(color: AppColors.white),
+                ),
               ),
             ),
           ],

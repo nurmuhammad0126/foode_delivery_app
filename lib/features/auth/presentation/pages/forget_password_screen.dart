@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
+import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 
 import '../../../../core/widgets/w_gradient_container.dart';
 import '../../../../core/widgets/widget_arrow_back_button.dart';
@@ -44,10 +47,15 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           ),
 
           Spacer(),
-          WGradientContainer(
-            child: Text(
-              "Next",
-              style: AppTextStyles.s18w600.copyWith(color: AppColors.white),
+          WScaleAnimation(
+            onTap: () {
+              context.push(AppRoutesNames.forgetPasswordOtp);
+            },
+            child: WGradientContainer(
+              child: Text(
+                "Next",
+                style: AppTextStyles.s18w600.copyWith(color: AppColors.white),
+              ),
             ),
           ),
         ],

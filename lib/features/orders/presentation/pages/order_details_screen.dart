@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_cached_image.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
@@ -39,6 +41,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
           WidgetHomeSearch(
             searchController: _searController,
+            onTap: () {},
           ).paddingSymmetric(horizontal: 24.w, vertical: 32.w),
 
           Expanded(
@@ -134,14 +137,16 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           ),
         ],
       ),
-
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-        child: WGradientContainer(
-          width: mediaQueryWidth,
-          height: mediaQueryHeight * 0.3,
-          colors: [AppColors.primary, AppColors.primaryLight],
-          child: OrderDetailsWidget(buttonTitle: 'Place my order'),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: WGradientContainer(
+        margin: EdgeInsets.symmetric(horizontal: 24.w),
+        width: mediaQueryWidth,
+        height: mediaQueryHeight * 0.3,
+        child: OrderDetailsWidget(
+          buttonTitle: 'Place my order',
+          onTap: () {
+            context.pushNamed(AppRoutesNames.deliverTo);
+          },
         ),
       ),
     );

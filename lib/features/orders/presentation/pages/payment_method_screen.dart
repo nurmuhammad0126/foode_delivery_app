@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/constants/assets.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/core/widgets/widget_arrow_back_button.dart';
@@ -34,7 +36,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
               spacing: 30,
               children: [
                 WContainerWithShadow(
-                  border: Border.all(color: AppColors.primary),
+                  border: Border.all(color: AppColors.primary, width: 2.w),
                   height: mediaQueryHeight * 0.1,
                   borderRadius: BorderRadius.circular(20),
 
@@ -111,8 +113,12 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         child: WGradientContainer(
           width: mediaQueryWidth,
           height: mediaQueryHeight * 0.3,
-          colors: [AppColors.primary, AppColors.primaryLight],
-          child: OrderDetailsWidget(buttonTitle: 'Next'),
+          child: OrderDetailsWidget(
+            buttonTitle: 'Next',
+            onTap: () {
+              context.pushNamed(AppRoutesNames.restaurantProfile);
+            },
+          ),
         ),
       ),
     );

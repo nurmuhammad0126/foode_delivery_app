@@ -6,7 +6,6 @@ import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_textstyles.dart';
-import '../../../../core/widgets/w_cached_image.dart';
 import '../../../../core/widgets/w_text_field.dart';
 import '../../../../core/widgets/widget_arrow_back_button.dart';
 import '../widgets/favorite_item_widget.dart';

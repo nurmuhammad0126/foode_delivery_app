@@ -14,6 +14,7 @@ void myButtonSheeat(BuildContext context, double mediaQueryWidth) {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
+            color: AppColors.white,
             width: double.infinity,
 
             child: Column(
@@ -24,7 +25,7 @@ void myButtonSheeat(BuildContext context, double mediaQueryWidth) {
                   height: 3.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(2),
-                    color: AppColors.neutralWhite,
+                    color: AppColors.white,
                   ),
                 ),
                 40.height,
@@ -52,7 +53,10 @@ void myButtonSheeat(BuildContext context, double mediaQueryWidth) {
                         padding: EdgeInsets.zero,
                         width: mediaQueryWidth * 0.45,
                         height: 55.h,
-                        border: Border.all(color: AppColors.primary),
+                        border: Border.all(
+                          color: AppColors.primary,
+                          width: 1.7,
+                        ),
                         borderRadius: BorderRadius.circular(30),
                         color: AppColors.white,
                         child: Center(

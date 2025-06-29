@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/constants/assets.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
+import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 import 'package:task_for_uicgroup/core/widgets/w_text_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/widgets/w_gradient_container.dart';
@@ -109,7 +112,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             20.height,
 
-            InkWell(
+            WScaleAnimation(
+              onTap: () {
+                context.push(AppRoutesNames.verifyBio);
+              },
               child: WGradientContainer(
                 child: Text(
                   "Sign in",
@@ -117,12 +123,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
             ),
-            20.height,
-            Text(
-              "Forgot the password?",
-              style: AppTextStyles.s16w600.copyWith(color: AppColors.primary),
-            ),
-            32.height,
+
+            24.height,
 
             Text("or continue with", style: AppTextStyles.s16w400),
             24.height,
@@ -159,13 +161,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ],
             ),
             32.height,
-            WRichText(
-              text1: "Don’t have an account? ",
-              text2: "Sign up",
-              textStyle1: AppTextStyles.s16w500.copyWith(color: AppColors.gray),
-            ),
           ],
         ).paddingSymmetric(horizontal: 24.w),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: WRichText(
+        text1: "Already have an account? ",
+        text2: "Sign in",
+        textStyle1: AppTextStyles.s16w500.copyWith(color: AppColors.gray),
+        onTapText2: () {
+          context.push(AppRoutesNames.login);
+        },
       ),
     );
   }

@@ -11,14 +11,14 @@ import '../../../../core/constants/app_textstyles.dart';
 import '../../../../core/widgets/w_text_field.dart';
 
 class HomeNotificationScreen extends StatefulWidget {
-  final TextEditingController searchController;
-  const HomeNotificationScreen({super.key, required this.searchController});
+  const HomeNotificationScreen({super.key,});
 
   @override
   State<HomeNotificationScreen> createState() => _HomeNotificationScreenState();
 }
 
 class _HomeNotificationScreenState extends State<HomeNotificationScreen> {
+  final TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final mediaQueryHeight = MediaQuery.of(context).size.height;
@@ -30,7 +30,7 @@ class _HomeNotificationScreenState extends State<HomeNotificationScreen> {
           WidgetArrowBackButton(text: "Notification"),
           24.height,
           WTextField(
-            controller: widget.searchController,
+            controller: searchController,
             fillColor: AppColors.background,
             hasBorderColor: false,
             border: Border.all(color: AppColors.background),

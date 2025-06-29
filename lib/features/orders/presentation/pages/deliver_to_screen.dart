@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/core/widgets/widget_arrow_back_button.dart';
@@ -29,7 +31,7 @@ class _DeliverToScreenState extends State<DeliverToScreen> {
             WidgetArrowBackButton(text: "Deliver to"),
             40.height,
             WContainerWithShadow(
-              border: Border.all(color: AppColors.primary),
+              border: Border.all(color: AppColors.primary, width: 2.w),
               height: mediaQueryHeight * 0.12,
               borderRadius: BorderRadius.circular(20),
 
@@ -50,6 +52,7 @@ class _DeliverToScreenState extends State<DeliverToScreen> {
                       color: AppColors.primary,
                     ),
                   ),
+                  24.width,
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -88,7 +91,7 @@ class _DeliverToScreenState extends State<DeliverToScreen> {
                       color: AppColors.primary,
                     ),
                   ),
-
+                  24.width,
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -107,13 +110,16 @@ class _DeliverToScreenState extends State<DeliverToScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-        child: WGradientContainer(
-          width: mediaQueryWidth,
-          height: mediaQueryHeight * 0.3,
-          colors: [AppColors.primary, AppColors.primaryLight],
-          child: OrderDetailsWidget(buttonTitle: 'Next'),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: WGradientContainer(
+        margin: EdgeInsets.symmetric(horizontal: 24.w),
+        width: mediaQueryWidth,
+        height: mediaQueryHeight * 0.3,
+        child: OrderDetailsWidget(
+          buttonTitle: 'Next',
+          onTap: () {
+            context.pushNamed(AppRoutesNames.paymentMethod);
+          },
         ),
       ),
     );

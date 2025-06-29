@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
+import 'package:task_for_uicgroup/core/routes/router.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
@@ -87,7 +90,18 @@ class _SetLoacationScreenState extends State<SetLoacationScreen> {
           ),
           Spacer(),
           WScaleAnimation(
-            onTap: () {},
+            onTap: () {
+              context.push(
+                AppRoutesNames.congrats,
+                extra: {
+                  "onTap": () {
+                    context.goToHome();
+                  },
+                  "title2": "Go homepage",
+                  "title1": "Your profile is ready to use",
+                },
+              );
+            },
             child: WGradientContainer(
               child: Text(
                 "Set Location",

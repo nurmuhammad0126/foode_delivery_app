@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/constants/assets.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
@@ -115,7 +117,9 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                     ),
                     24.height,
                     WScaleAnimation(
-                      onTap: () {},
+                      onTap: () {
+                        context.pushNamed(AppRoutesNames.promo);
+                      },
                       child: WGradientContainer(
                         child: Text(
                           "Submit",

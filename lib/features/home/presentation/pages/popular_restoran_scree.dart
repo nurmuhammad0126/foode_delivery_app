@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
@@ -6,16 +7,17 @@ import 'package:task_for_uicgroup/core/widgets/widget_arrow_back_button.dart';
 import 'package:task_for_uicgroup/features/home/presentation/pages/home_screen.dart';
 import 'package:task_for_uicgroup/features/home/presentation/widgets/widget_restoran_details_container.dart';
 
+import '../../../../core/routes/route_names.dart';
 import '../widgets/widget_home_search.dart';
 
-class PopularRestoranScree extends StatefulWidget {
-  const PopularRestoranScree({super.key});
+class PopularRestoranScreen extends StatefulWidget {
+  const PopularRestoranScreen({super.key});
 
   @override
-  State<PopularRestoranScree> createState() => _PopularRestoranScreenState();
+  State<PopularRestoranScreen> createState() => _PopularRestoranScreenState();
 }
 
-class _PopularRestoranScreenState extends State<PopularRestoranScree> {
+class _PopularRestoranScreenState extends State<PopularRestoranScreen> {
   final TextEditingController _searController = TextEditingController();
   final List<RestoranItems> homeDetailsRestorans = [
     ...restaurants,
@@ -35,6 +37,9 @@ class _PopularRestoranScreenState extends State<PopularRestoranScree> {
           ).paddingOnly(left: 24.w, right: 24.w, top: 24.w),
           WidgetHomeSearch(
             searchController: _searController,
+            onTap: () {
+              context.pushNamed(AppRoutesNames.findFood);
+            },
           ).paddingSymmetric(horizontal: 24.w, vertical: 32.w),
 
           GridView.builder(
@@ -57,6 +62,8 @@ class _PopularRestoranScreenState extends State<PopularRestoranScree> {
               );
             },
           ),
+
+          64.height,
         ],
       ),
     );

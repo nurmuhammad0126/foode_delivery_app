@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_cached_image.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/widget_arrow_back_button.dart';
@@ -33,6 +35,9 @@ class _PopularMenuScreenState extends State<PopularMenuScreen> {
 
           WidgetHomeSearch(
             searchController: _searController,
+            onTap: () {
+              context.pushNamed(AppRoutesNames.findFood);
+            },
           ).paddingSymmetric(horizontal: 24.w, vertical: 32.w),
 
           ListView.builder(
@@ -79,7 +84,6 @@ class _PopularMenuScreenState extends State<PopularMenuScreen> {
               ).paddingOnly(bottom: 32.w, left: 24.w, right: 24.w);
             },
           ),
-        
         ],
       ),
     );

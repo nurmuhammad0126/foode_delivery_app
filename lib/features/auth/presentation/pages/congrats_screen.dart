@@ -8,7 +8,16 @@ import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 
 class CongratsScreen extends StatelessWidget {
-  const CongratsScreen({super.key});
+  final VoidCallback onTap;
+  final String title1;
+  final String title2;
+
+  const CongratsScreen({
+    super.key,
+    required this.onTap,
+    required this.title1,
+    required this.title2,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +43,7 @@ class CongratsScreen extends StatelessWidget {
                 ),
                 8.height,
                 Text(
-                  "Your profile is ready to use",
+                  title1,
                   style: AppTextStyles.s14w700.copyWith(color: AppColors.gray),
                 ),
               ],
@@ -47,11 +56,10 @@ class CongratsScreen extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.all(24.w),
               child: WScaleAnimation(
-                onTap: () {},
+                onTap: onTap,
                 child: WGradientContainer(
-
                   child: Text(
-                    "Go homepage",
+                    title2,
                     textAlign: TextAlign.center,
                     style: AppTextStyles.s18w600.copyWith(
                       color: AppColors.white,

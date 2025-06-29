@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:task_for_uicgroup/core/constants/assets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:task_for_uicgroup/core/constants/assets.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/features/auth/data/datasource/local_datasource.dart';
-import 'package:task_for_uicgroup/features/home/presentation/pages/home_screen.dart';
-import 'package:task_for_uicgroup/features/auth/presentation/pages/login_screen.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -21,36 +23,32 @@ class _SplashPageState extends State<SplashPage> {
     _navigateUser();
   }
 
-Future<void> _navigateUser() async {
-  await Future.delayed(Duration(seconds: 2));
+  Future<void> _navigateUser() async {
+    await Future.delayed(const Duration(seconds: 2));
 
-  final user = FirebaseAuth.instance.currentUser;
-  final token = await authLocalDatasource.getToken();
+    final user = FirebaseAuth.instance.currentUser;
+    final token = await authLocalDatasource.getToken();
 
-  if (user != null && token != null) {
-    final newToken = await user.getIdToken(true);
-    await authLocalDatasource.saveToken(newToken.toString());
+    if (user != null && token != null) {
+      final newToken = await user.getIdToken(true);
+      await authLocalDatasource.saveToken(newToken);
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => HomeScreen()),
-    );
-  } else {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => LoginScreen()),
-    );
+      if (mounted) {
+        context.go(AppRoutesNames.home);
+      }
+    } else {
+      if (mounted) {
+        context.go(AppRoutesNames.onboarding); // yoki login, agar onboarding yo'q bo‘lsa
+      }
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+          Positioned.fill(
             child: Image.asset(
               Assets.backgroundImage,
               fit: BoxFit.cover,

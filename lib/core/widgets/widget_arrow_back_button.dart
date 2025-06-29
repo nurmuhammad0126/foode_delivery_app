@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 
 import '../constants/app_colors.dart';
@@ -16,7 +17,7 @@ class WidgetArrowBackButton extends StatelessWidget {
         InkWell(
           borderRadius: BorderRadius.circular(12.w),
           onTap: () {
-            Navigator.pop(context);
+            context.pop();
           },
           child: Ink(
             width: 36.w,

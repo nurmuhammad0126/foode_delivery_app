@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class WScaleAnimation extends StatefulWidget {
   final Widget child;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final VoidCallback? onLongTap;
   final Duration duration;
   final double scaleValue;
@@ -11,18 +10,19 @@ class WScaleAnimation extends StatefulWidget {
 
   const WScaleAnimation({
     required this.child,
-    required this.onTap,
+    this.onTap,
     this.isDisabled = false,
-    this.duration = const Duration(milliseconds: 150),
+    this.duration = const Duration(milliseconds: 300),
     this.scaleValue = 0.95,
     this.onLongTap,
     super.key,
-  })  : assert(scaleValue <= 1 && scaleValue >= 0,
-            'scalue value should be in the range [0,1]');
+  }) : assert(
+         scaleValue <= 1 && scaleValue >= 0,
+         'scale value should be in the range [0,1]',
+       );
 
   @override
-  // ignore: library_private_types_in_public_api
-  _WScaleAnimationState createState() => _WScaleAnimationState();
+  State<WScaleAnimation> createState() => _WScaleAnimationState();
 }
 
 class _WScaleAnimationState extends State<WScaleAnimation>
@@ -32,20 +32,12 @@ class _WScaleAnimationState extends State<WScaleAnimation>
 
   @override
   void initState() {
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.duration,
-    );
-    _scaleAnimation = Tween<double>(
-      begin: 1,
-      end: widget.scaleValue,
-    ).animate(
-      CurvedAnimation(
-        curve: Curves.decelerate,
-        parent: _controller,
-      ),
-    );
     super.initState();
+    _controller = AnimationController(vsync: this, duration: widget.duration);
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: widget.scaleValue,
+    ).animate(CurvedAnimation(curve: Curves.easeInOut, parent: _controller));
   }
 
   @override
@@ -54,39 +46,126 @@ class _WScaleAnimationState extends State<WScaleAnimation>
     super.dispose();
   }
 
+  /// Animation'ni boshlash
+  void _startAnimation() {
+    if (!widget.isDisabled) {
+      _controller.forward();
+    }
+  }
+
+  /// Animation'ni tugallash va callback'ni chaqirish
+  void _completeAnimation() {
+    if (!widget.isDisabled) {
+      _controller.reverse().then((_) {
+        // Animation tugagandan keyin callback'ni chaqirish
+        if (widget.onTap != null) {
+          widget.onTap!();
+        }
+      });
+    }
+  }
+
+  /// Animation'ni bekor qilish
+  void _cancelAnimation() {
+    if (!widget.isDisabled) {
+      _controller.reverse();
+    }
+  }
+
   @override
-  Widget build(BuildContext context) => GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          if (!widget.isDisabled) {
-            widget.onTap();
-          }
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+
+      // Tap boshlanishi
+      onTapDown: (_) => _startAnimation(),
+
+      // Tap tugashi
+      onTapUp: (_) => _completeAnimation(),
+
+      // Tap bekor qilinishi
+      onTapCancel: () => _cancelAnimation(),
+
+      // Long press
+      onLongPress: () {
+        if (!widget.isDisabled && widget.onLongTap != null) {
+          widget.onLongTap!();
+        }
+      },
+
+      child: AnimatedBuilder(
+        animation: _scaleAnimation,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: _scaleAnimation.value,
+            child: widget.child,
+          );
         },
-        onLongPress: () {
-          if (!widget.isDisabled) {
-            if (widget.onLongTap != null) {
-              widget.onLongTap!();
-            }
-          }
-        },
-        onPanDown: (details) {
-          if (!widget.isDisabled) {
-            _controller.forward();
-          }
-        },
-        onPanCancel: () {
-          if (!widget.isDisabled) {
-            _controller.reverse();
-          }
-        },
-        onPanEnd: (details) {
-          if (!widget.isDisabled) {
-            _controller.reverse();
-          }
-        },
-        child: ScaleTransition(
-          scale: _scaleAnimation,
-          child: widget.child,
-        ),
-      );
+      ),
+    );
+  }
+}
+
+// Alternative versiya - daha sodda va samarali
+class WScaleAnimationSimple extends StatefulWidget {
+  final Widget child;
+  final VoidCallback? onTap;
+  final VoidCallback? onLongTap;
+  final Duration duration;
+  final double scaleValue;
+  final bool isDisabled;
+
+  const WScaleAnimationSimple({
+    required this.child,
+    this.onTap,
+    this.isDisabled = false,
+    this.duration = const Duration(milliseconds: 100),
+    this.scaleValue = 0.95,
+    this.onLongTap,
+    super.key,
+  });
+
+  @override
+  State<WScaleAnimationSimple> createState() => _WScaleAnimationSimpleState();
+}
+
+class _WScaleAnimationSimpleState extends State<WScaleAnimationSimple> {
+  bool _isPressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTapDown: (_) {
+        if (!widget.isDisabled) {
+          setState(() => _isPressed = true);
+        }
+      },
+      onTapUp: (_) {
+        if (!widget.isDisabled) {
+          setState(() => _isPressed = false);
+          // Kichik delay bilan callback'ni chaqirish
+          Future.delayed(const Duration(milliseconds: 120), () {
+            widget.onTap?.call();
+          });
+        }
+      },
+      onTapCancel: () {
+        if (!widget.isDisabled) {
+          setState(() => _isPressed = false);
+        }
+      },
+      onLongPress: () {
+        if (!widget.isDisabled) {
+          widget.onLongTap?.call();
+        }
+      },
+      child: AnimatedScale(
+        scale: _isPressed ? widget.scaleValue : 1.0,
+        duration: widget.duration,
+        curve: Curves.easeInOut,
+        child: widget.child,
+      ),
+    );
+  }
 }

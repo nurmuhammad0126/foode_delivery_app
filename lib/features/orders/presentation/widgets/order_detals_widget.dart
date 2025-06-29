@@ -3,6 +3,7 @@ import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
+import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 
 class OrderDetailsWidget extends StatefulWidget {
   final String? subtotal;
@@ -11,14 +12,17 @@ class OrderDetailsWidget extends StatefulWidget {
   final String? total;
   final VoidCallback? onPlaceOrder;
   final String buttonTitle;
+  final VoidCallback onTap;
 
-  OrderDetailsWidget({
+  const OrderDetailsWidget({
     super.key,
     this.subtotal,
     this.deliveryCharge,
     this.discount,
     this.total,
-    this.onPlaceOrder, required this.buttonTitle,
+    this.onPlaceOrder,
+    required this.buttonTitle,
+    required this.onTap,
   });
 
   @override
@@ -31,7 +35,6 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
-        
         mainAxisSize: MainAxisSize.min,
         children: [
           10.height,
@@ -47,15 +50,20 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
 
           _buildPriceRow("Total", widget.total ?? "\$27"),
           Spacer(),
-          WContainerWithShadow(
-            width: MediaQuery.of(context).size.width,
-            height: 55.h,
-            borderRadius: BorderRadius.circular(30),
-            color: AppColors.white,
-            child: Center(
-              child: Text(
-                widget.buttonTitle,
-                style: AppTextStyles.s18w600.copyWith(color: AppColors.primary),
+          WScaleAnimation(
+            onTap: widget.onTap,
+            child: WContainerWithShadow(
+              width: MediaQuery.of(context).size.width,
+              height: 55.h,
+              borderRadius: BorderRadius.circular(30),
+              color: AppColors.white,
+              child: Center(
+                child: Text(
+                  widget.buttonTitle,
+                  style: AppTextStyles.s18w600.copyWith(
+                    color: AppColors.primary,
+                  ),
+                ),
               ),
             ),
           ),

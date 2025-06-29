@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/constants/assets.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
+import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
+import 'package:task_for_uicgroup/core/widgets/w_rich_text.dart';
+import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 import 'package:task_for_uicgroup/core/widgets/w_text_field.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:task_for_uicgroup/features/auth/data/model/auth_model.dart';
 import 'package:task_for_uicgroup/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:task_for_uicgroup/features/auth/presentation/cubits/auth_cubits.dart';
-import '../../../../core/widgets/w_gradient_container.dart';
-import '../../../../core/widgets/w_rich_text.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,20 +26,20 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emaiController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _login() {
     if (_formKey.currentState!.validate()) {
       context.read<AuthBloc>().add(
-        SignInRequested(
-          AuthModel(
-            email: _emaiController.text,
-            password: _passwordController.text,
-          ),
-        ),
-      );
+            SignInRequested(
+              AuthModel(
+                email: _emailController.text,
+                password: _passwordController.text,
+              ),
+            ),
+          );
     }
   }
 
@@ -57,13 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
             }
 
             if (state is AuthSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Mofaqiyatli'),
-                  backgroundColor: Colors.red,
-                  behavior: SnackBarBehavior.floating,
-                ),
-              );
+              context.go(AppRoutesNames.home); // Navigate to home
             }
           },
           builder: (context, state) {
@@ -80,85 +78,37 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      WRichText(
-                        text1: "Email ",
-                        text2: "*",
-                      ).paddingOnly(left: 24.w),
+                      WRichText(text1: "Email ", text2: "*").paddingOnly(left: 24.w),
                       8.height,
                       WTextField(
+                        controller: _emailController,
+                        hintText: "Email or Phone Number",
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Email bo‘sh bo‘lishi mumkin emas';
-                          }
-                          if (!RegExp(
-                            r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                          ).hasMatch(value)) {
+                          if (value == null || value.isEmpty) return 'Email bo‘sh bo‘lishi mumkin emas';
+                          if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
                             return 'Email noto‘g‘ri kiritilgan';
                           }
                           return null;
                         },
-                        hintText: "Email or Phone Number",
-                        controller: _emaiController,
                       ),
-                      _emaiController.text.isEmpty
-                          ? Container(
-                            margin: EdgeInsets.only(top: 12.h),
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                              vertical: 6.h,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.w),
-                              color: AppColors.gray100,
-                            ),
-                            child: Row(
-                              spacing: 8.w,
-                              children: [
-                                Icon(
-                                  Icons.error,
-                                  color: AppColors.darkGray,
-                                  size: 21,
-                                ),
-                                Text(
-                                  "This is a message",
-                                  style: AppTextStyles.s12w400,
-                                ),
-                              ],
-                            ),
-                          )
-                          : SizedBox(),
                       20.height,
-                      WRichText(
-                        text1: "Password ",
-                        text2: "*",
-                      ).paddingOnly(left: 24.w),
+                      WRichText(text1: "Password ", text2: "*").paddingOnly(left: 24.w),
                       8.height,
                       BlocBuilder<PasswordVisibilityCubit, bool>(
                         builder: (context, isVisible) {
                           return WTextField(
+                            controller: _passwordController,
+                            hintText: "Password",
+                            isObscureText: !isVisible,
                             validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Parol bo‘sh bo‘lishi mumkin emas';
-                              }
-                              if (value.length < 6) {
-                                return 'Parol kamida 6 ta belgidan iborat bo‘lishi kerak';
-                              }
+                              if (value == null || value.isEmpty) return 'Parol bo‘sh bo‘lishi mumkin emas';
+                              if (value.length < 6) return 'Parol kamida 6 ta belgidan iborat bo‘lishi kerak';
                               return null;
                             },
-                            hintText: "Password",
-                            controller: _passwordController,
-                            isObscureText: !isVisible,
                             suffixIcon: GestureDetector(
-                              onTap: () {
-                                context
-                                    .read<PasswordVisibilityCubit>()
-                                    .toggle();
-                              },
+                              onTap: () => context.read<PasswordVisibilityCubit>().toggle(),
                               child: Icon(
-                                isVisible
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
+                                isVisible ? Icons.visibility_off : Icons.visibility,
                                 color: AppColors.gray,
                               ),
                             ),
@@ -175,9 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Checkbox(
                           value: state,
-                          onChanged: (value) {
-                            context.read<ToggleCubit>().toggle(value!);
-                          },
+                          onChanged: (value) => context.read<ToggleCubit>().toggle(value!),
                           checkColor: AppColors.white,
                           activeColor: AppColors.primary,
                         ),
@@ -187,36 +135,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 20.height,
-
-                InkWell(
-                  child: BlocBuilder<ToggleCubit, bool>(
-                    builder: (context, isChecked) {
-                      return WGradientContainer(
-                        colors:
-                            isChecked
-                                ? [Color(0xFFFF7E95), Color(0xFFFF1843)]
-                                : [Color(0xFFFF7E95), Color(0xFFFF7E95)],
-                        isTextVisible: state is! AuthLoading,
-                        onTap: isChecked ? _login : () {},
-                        child: Text(
-                          "Sign in",
-                          style: AppTextStyles.s18w600.copyWith(
-                            color: AppColors.white,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                BlocBuilder<ToggleCubit, bool>(
+                  builder: (context, isChecked) {
+                    return WGradientContainer(
+                      onTap: isChecked ? _login : () {},
+                      colors: isChecked
+                          ? [Color(0xFFFF7E95), Color(0xFFFF1843)]
+                          : [Color(0xFFFF7E95), Color(0xFFFF7E95)],
+                      isTextVisible: state is! AuthLoading,
+                      child: Text(
+                        "Sign in",
+                        style: AppTextStyles.s18w600.copyWith(color: AppColors.white),
+                      ),
+                    );
+                  },
                 ),
                 20.height,
-                Text(
-                  "Forgot the password?",
-                  style: AppTextStyles.s16w600.copyWith(
-                    color: AppColors.primary,
+                WScaleAnimation(
+                  onTap: () => context.push(AppRoutesNames.forgetPassword),
+                  child: Text(
+                    "Forgot the password?",
+                    style: AppTextStyles.s16w600.copyWith(color: AppColors.primary),
                   ),
                 ),
                 32.height,
-
                 Text("or continue with", style: AppTextStyles.s16w400),
                 24.height,
                 Row(
@@ -235,7 +177,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-
                     Expanded(
                       child: WContainerWithShadow(
                         color: AppColors.white,
@@ -255,14 +196,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 WRichText(
                   text1: "Don’t have an account? ",
                   text2: "Sign up",
-                  textStyle1: AppTextStyles.s16w500.copyWith(
-                    color: AppColors.gray,
-                  ),
+                  textStyle1: AppTextStyles.s16w500.copyWith(color: AppColors.gray),
+                  onTapText2: () => context.push(AppRoutesNames.register),
                 ),
               ],
-            );
+            ).paddingSymmetric(horizontal: 24.w);
           },
-        ).paddingSymmetric(horizontal: 24.w),
+        ),
       ),
     );
   }

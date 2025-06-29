@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
+import 'package:task_for_uicgroup/core/routes/router.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/core/widgets/w_rich_text.dart';
+import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 import 'package:task_for_uicgroup/core/widgets/w_text_field.dart';
 import 'package:task_for_uicgroup/core/widgets/widget_arrow_back_button.dart';
 
@@ -68,10 +72,24 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             ],
           ),
           Spacer(),
-          WGradientContainer(
-            child: Text(
-              "Next",
-              style: AppTextStyles.s18w600.copyWith(color: AppColors.white),
+          WScaleAnimation(
+            onTap: () {
+              context.push(
+                AppRoutesNames.congrats,
+                extra: {
+                  "onTap": () {
+                    context.goToLogin();
+                  },
+                  "title1": "Password reset successful",
+                  "title2": "Ok",
+                },
+              );
+            },
+            child: WGradientContainer(
+              child: Text(
+                "Save",
+                style: AppTextStyles.s18w600.copyWith(color: AppColors.white),
+              ),
             ),
           ),
         ],

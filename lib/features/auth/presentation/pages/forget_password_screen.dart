@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
@@ -10,6 +11,12 @@ import 'package:task_for_uicgroup/core/widgets/w_text_field.dart';
 import 'package:task_for_uicgroup/core/widgets/widget_arrow_back_button.dart';
 import 'package:task_for_uicgroup/features/auth/presentation/cubits/forget_password_cubit.dart';
 import 'package:task_for_uicgroup/features/auth/presentation/pages/login_screen.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
+import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
+
+import '../../../../core/widgets/w_gradient_container.dart';
+import '../../../../core/widgets/widget_arrow_back_button.dart';
+import '../widgets/widget_for_change_forget_password.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
@@ -42,7 +49,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               ),
             );
 
-            // asldkjfals;kdjfn
             Future.delayed(Duration(seconds: 1), () {
               return Navigator.pushReplacement(
                 context,
@@ -107,6 +113,20 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           );
         },
       ),
+          Spacer(),
+          WScaleAnimation(
+            onTap: () {
+              context.push(AppRoutesNames.forgetPasswordOtp);
+            },
+            child: WGradientContainer(
+              child: Text(
+                "Next",
+                style: AppTextStyles.s18w600.copyWith(color: AppColors.white),
+              ),
+            ),
+          ),
+        ],
+      ).paddingAll(24.w),
     );
   }
 }

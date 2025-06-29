@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/constants/assets.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/features/auth/data/datasource/local_datasource.dart';
 import 'package:task_for_uicgroup/features/auth/presentation/pages/login_screen.dart';
+import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 import 'package:task_for_uicgroup/features/home/presentation/widgets/widget_home_search.dart';
 
+import '../../../../core/widgets/w_cached_image.dart';
 import '../widgets/widget_restoran_details_container.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -44,9 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         child: Column(
+          spacing: 32.w,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            20.height,
-
+            24.height,
             Row(
               children: [
                 WGradientContainer(
@@ -57,19 +62,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 24.width,
                 Text("Hello, Daniel !", style: AppTextStyles.s24w600),
                 Spacer(),
-                WContainerWithShadow(
-                  border: Border.all(color: AppColors.gray50),
-                  color: AppColors.gray50,
-                  padding: EdgeInsets.all(10.w),
-                  child: Icon(
-                    Icons.notifications_active_rounded,
-                    color: AppColors.primary,
+                WScaleAnimation(
+                  onTap: () {
+                    context.pushNamed(AppRoutesNames.notification);
+                  },
+                  child: WContainerWithShadow(
+                    border: Border.all(color: AppColors.gray50),
+                    color: AppColors.gray50,
+                    padding: EdgeInsets.all(10.w),
+                    child: Icon(
+                      Icons.notifications_active_rounded,
+                      color: AppColors.primary,
+                    ),
                   ),
                 ),
               ],
-            ).paddingOnly(left: 24.w, right: 24.w, top: 24.w),
-            WidgetHomeSearch(searchController: _searController)
-              ..paddingSymmetric(horizontal: 24.w, vertical: 32.w),
+            ),
+            WidgetHomeSearch(searchController: _searController, onTap: () {}),
             WGradientContainer(
               height: mediaQueryHeight * 0.2,
               child: Row(
@@ -103,20 +112,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-            ).paddingSymmetric(horizontal: 24.w),
+            ),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Popular RestoranItems", style: AppTextStyles.s20w600),
-                Text(
-                  "See all",
-                  style: AppTextStyles.s16w600.copyWith(
-                    color: AppColors.primary,
+                Text("Popular Restoran", style: AppTextStyles.s20w600),
+                WScaleAnimation(
+                  onTap: () {
+                    context.pushNamed(AppRoutesNames.popularRestaurant);
+                  },
+                  child: Text(
+                    "See all",
+                    style: AppTextStyles.s16w600.copyWith(
+                      color: AppColors.primary,
+                    ),
                   ),
                 ),
               ],
-            ).paddingSymmetric(horizontal: 18.w, vertical: 32.w),
+            ),
             SizedBox(
               height: mediaQueryHeight * 0.23,
               child: ListView.builder(
@@ -127,26 +141,80 @@ class _HomeScreenState extends State<HomeScreen> {
                   final restoran = restaurants[index];
                   return WidgetRestoranDetailsContainer(
                     restoranItems: restoran,
-                    margin: EdgeInsets.only(left: 24.w),
+                    margin: EdgeInsets.only(right: 24.w),
                     widthC: mediaQueryWidth * 0.4,
                   );
                 },
               ),
             ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Popular Menu", style: AppTextStyles.s20w600),
-                Text(
-                  "See all",
-                  style: AppTextStyles.s16w600.copyWith(
-                    color: AppColors.primary,
+                WScaleAnimation(
+                  onTap: () {
+                    context.pushNamed(AppRoutesNames.popularMenu);
+                  },
+                  child: Text(
+                    "See all",
+                    style: AppTextStyles.s16w600.copyWith(
+                      color: AppColors.primary,
+                    ),
                   ),
                 ),
               ],
-            ).paddingSymmetric(horizontal: 18.w, vertical: 32.w),
+            ),
+
+            ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              clipBehavior: Clip.none,
+              shrinkWrap: true,
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return WContainerWithShadow(
+                  border: Border.all(color: AppColors.white),
+                  height: mediaQueryHeight * 0.1,
+                  margin: EdgeInsets.only(bottom: 24.w),
+                  color: AppColors.white,
+                  child: Row(
+                    children: [
+                      WCachedImage(
+                        borderRadius: BorderRadius.circular(14),
+                        width: mediaQueryWidth * 0.2,
+                        imageUrl:
+                            "https://images.ctfassets.net/0tc4847zqy12/1srWoukcEfZ0fjWpSn0ppM/61e0572e4d73e43093efe7e77cfb43c3/F25_HabaneroLimeSteak_QDOBA-Mexican-Eats_MenuPage.png?w=800&q=25",
+                      ),
+                      20.width,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("data", style: AppTextStyles.s18w600),
+                          Text(
+                            "data",
+                            style: AppTextStyles.s14w400.copyWith(
+                              color: AppColors.gray,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Text(
+                        "\$77",
+                        style: AppTextStyles.s10w600.copyWith(
+                          color: AppColors.primary,
+                          fontSize: 28.o,
+                        ),
+                      ).paddingOnly(right: 12.w),
+                    ],
+                  ),
+                );
+              },
+            ),
+            60.height,
           ],
-        ),
+        ).paddingSymmetric(horizontal: 24.w),
       ),
     );
   }

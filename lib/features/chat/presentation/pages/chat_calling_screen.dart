@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/constants/assets.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
+import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 
 class ChatCallingScreen extends StatefulWidget {
   const ChatCallingScreen({super.key});
@@ -52,23 +55,28 @@ class _ChatCallingScreenState extends State<ChatCallingScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         spacing: 25.w,
         children: [
-          WContainerWithShadow(
-            border: Border(),
-            padding: EdgeInsets.zero,
-            width: 70.w,
-            height: 70.h,
-            borderRadius: BorderRadius.circular(100),
-            color: AppColors.primary100,
-            child: Center(
-              child: Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: const Center(
-                  child: Icon(Icons.close, color: Colors.white, size: 18),
+          WScaleAnimation(
+            onTap: () {
+              context.pushNamed(AppRoutesNames.driverRating);
+            },
+            child: WContainerWithShadow(
+              border: Border(),
+              padding: EdgeInsets.zero,
+              width: 70.w,
+              height: 70.h,
+              borderRadius: BorderRadius.circular(100),
+              color: AppColors.primary100,
+              child: Center(
+                child: Container(
+                  width: 30,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: const Center(
+                    child: Icon(Icons.close, color: Colors.white, size: 18),
+                  ),
                 ),
               ),
             ),

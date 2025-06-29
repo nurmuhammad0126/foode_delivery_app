@@ -1,94 +1,135 @@
-// import 'dart:convert';
-// import 'package:firebase_core/firebase_core.dart';
-// import '../models/home_models.dart';
+import 'package:task_for_uicgroup/core/constants/network_path.dart';
+import 'package:task_for_uicgroup/core/dio_client/dio_client.dart';
+import 'package:task_for_uicgroup/features/home/data/models/review_model.dart';
+import 'package:task_for_uicgroup/features/home/data/models/user_model.dart';
 
-// class FirebaseRemoteDatasource {
-//   final _db = FirebaseDatabase.instance.ref();
+import '../models/meal_model.dart';
+import '../models/restoran_model.dart';
 
-//   /// 🔹 Get all categories
-//   Future<List<CategoryModel>> getAllCategories() async {
-//     final snapshot = await _db.child('categories').get();
-//     if (snapshot.exists) {
-//       final data = Map<String, dynamic>.from(snapshot.value as Map);
-//       return data.entries
-//           .map((e) => CategoryModel.fromJson({...e.value, 'id': e.key}))
-//           .toList();
-//     }
-//     return [];
-//   }
+abstract class HomeDatasource {
+  Future<List<RestaurantModel>> getRestaurnts();
+  Future<List<MealModel>> getMeals();
+  Future<List<UserModel>> getUsers();
+  Future<List<ReviewModel>> getReviews();
 
-//   /// 🔹 Get all meals
-//   Future<List<MealModel>> getAllMeals() async {
-//     final snapshot = await _db.child('meals').get();
-//     if (snapshot.exists) {
-//       final data = Map<String, dynamic>.from(snapshot.value as Map);
-//       return data.entries
-//           .map((e) => MealModel.fromJson({...e.value, 'id': e.key}))
-//           .toList();
-//     }
-//     return [];
-//   }
+  Future<RestaurantModel> getRestaurnt(String id);
+  Future<MealModel> getMeal(String id);
+  Future<UserModel> getUser(String id);
+  Future<ReviewModel> getReview(String id);
+}
 
-//   /// 🔹 Get all restaurants
-//   Future<List<RestaurantModel>> getAllRestaurants() async {
-//     final snapshot = await _db.child('restaurants').get();
-//     if (snapshot.exists) {
-//       final data = Map<String, dynamic>.from(snapshot.value as Map);
-//       return data.entries
-//           .map((e) => RestaurantModel.fromJson({...e.value, 'id': e.key}))
-//           .toList();
-//     }
-//     return [];
-//   }
+class HomeDatasourceImpl implements HomeDatasource {
+  final DioClient dioClient;
 
-//   /// 🔹 Get all reviews
-//   Future<List<ReviewModel>> getAllReviews() async {
-//     final snapshot = await _db.child('reviews').get();
-//     if (snapshot.exists) {
-//       final data = Map<String, dynamic>.from(snapshot.value as Map);
-//       return data.entries
-//           .map((e) => ReviewModel.fromJson({...e.value, 'id': e.key}))
-//           .toList();
-//     }
-//     return [];
-//   }
+  HomeDatasourceImpl({required this.dioClient});
 
-//   /// 🔹 Get user by ID
-//   Future<UserModel?> getUser(String userId) async {
-//     final snapshot = await _db.child('users/$userId').get();
-//     if (snapshot.exists) {
-//       return UserModel.fromJson({...snapshot.value as Map, 'id': userId});
-//     }
-//     return null;
-//   }
+  @override
+  Future<List<ReviewModel>> getReviews() async {
+    try {
+      final res = await dioClient.get(NetworkPath.reviews);
+      final data = res.data as Map<String, dynamic>;
+      final List<ReviewModel> result = [];
 
-//   /// 🔹 Create or update user
-//   Future<void> createOrUpdateUser(UserModel user) async {
-//     await _db.child('users/${user.id}').set(user.toJson());
-//   }
+      data.forEach((key, value) {
+        value["id"] = key;
+        result.add(value);
+      });
+      return result;
+    } catch (e) {
+      throw "Get reviews Functionsida xato boldi $e";
+    }
+  }
 
-//   /// 🔹 Create or update meal
-//   Future<void> createOrUpdateMeal(MealModel meal) async {
-//     await _db.child('meals/${meal.id}').set(meal.toJson());
-//   }
+  @override
+  Future<List<UserModel>> getUsers() async {
+    try {
+      final res = await dioClient.get(NetworkPath.users);
+      final data = res.data as Map<String, dynamic>;
+      final List<UserModel> result = [];
 
-//   /// 🔹 Create or update restaurant
-//   Future<void> createOrUpdateRestaurant(RestaurantModel restaurant) async {
-//     await _db.child('restaurants/${restaurant.id}').set(restaurant.toJson());
-//   }
+      data.forEach((key, value) {
+        value["id"] = key;
+        result.add(value);
+      });
+      return result;
+    } catch (e) {
+      throw "Get meals Functionsida xato boldi $e";
+    }
+  }
 
-//   /// 🔹 Create review
-//   Future<void> createReview(ReviewModel review) async {
-//     await _db.child('reviews/${review.id}').set(review.toJson());
-//   }
+  @override
+  Future<List<MealModel>> getMeals() async {
+    try {
+      final res = await dioClient.get(NetworkPath.meals);
+      final data = res.data as Map<String, dynamic>;
+      final List<MealModel> result = [];
 
-//   /// 🔹 Update user likedMeals
-//   Future<void> updateLikedMeals(String userId, Map<String, bool> likedMeals) async {
-//     await _db.child('users/$userId/likedMeals').set(likedMeals);
-//   }
+      data.forEach((key, value) {
+        value["id"] = key;
+        result.add(value);
+      });
+      return result;
+    } catch (e) {
+      throw "Get meals Functionsida xato boldi $e";
+    }
+  }
 
-//   /// 🔹 Update saved restaurants
-//   Future<void> updateSavedRestaurants(String userId, Map<String, bool> savedRestaurants) async {
-//     await _db.child('users/$userId/savedRestaurants').set(savedRestaurants);
-//   }
-// }
+  @override
+  Future<List<RestaurantModel>> getRestaurnts() async {
+    try {
+      final res = await dioClient.get(NetworkPath.restaurants);
+      final data = res.data as Map;
+      final List<RestaurantModel> result = [];
+
+      data.forEach((key, value) {
+        value["id"] = key;
+        result.add(value);
+      });
+      return result;
+    } catch (e) {
+      throw "Get restoran Functionsida xato boldi $e";
+    }
+  }
+
+  @override
+  Future<MealModel> getMeal(String id) async {
+    try {
+      final res = await dioClient.get("${NetworkPath.meals}/$id");
+
+      return MealModel.fromMap(res.data);
+    } catch (e) {
+      throw "Get mealda Functionsida xato boldi $e";
+    }
+  }
+
+  @override
+  Future<RestaurantModel> getRestaurnt(String id) async {
+    try {
+      final res = await dioClient.get("${NetworkPath.restaurants}/$id");
+
+      return RestaurantModel.fromMap(res.data as Map<String, dynamic>);
+    } catch (e) {
+      throw "Get Restoran Functionsida xato boldi $e";
+    }
+  }
+
+  @override
+  Future<ReviewModel> getReview(String id) async {
+    try {
+      final res = await dioClient.get("${NetworkPath.reviews}/$id");
+      return ReviewModel.fromMap(res.data);
+    } catch (e) {
+      throw "Get Reviewda xatolik boldi";
+    }
+  }
+
+  @override
+  Future<UserModel> getUser(String id) async {
+    try {
+      final res = await dioClient.get("${NetworkPath.users}/$id");
+      return UserModel.fromJson(res.data as Map<String, dynamic>);
+    } catch (e) {
+      throw "Get User Functionida xatolik boldi";
+    }
+  }
+}

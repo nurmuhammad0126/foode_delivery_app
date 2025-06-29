@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:task_for_uicgroup/core/constants/assets.dart';
 import 'package:task_for_uicgroup/core/routes/route_names.dart';
+import 'package:task_for_uicgroup/core/routes/router.dart';
 import 'package:task_for_uicgroup/features/auth/data/datasource/local_datasource.dart';
 
 class SplashPage extends StatefulWidget {
@@ -31,14 +31,14 @@ class _SplashPageState extends State<SplashPage> {
 
     if (user != null && token != null) {
       final newToken = await user.getIdToken(true);
-      await authLocalDatasource.saveToken(newToken);
+      await authLocalDatasource.saveToken(newToken ?? "");
 
       if (mounted) {
-        context.go(AppRoutesNames.home);
+        context.goToHome();
       }
     } else {
       if (mounted) {
-        context.go(AppRoutesNames.onboarding); // yoki login, agar onboarding yo'q bo‘lsa
+        context.goNamed(AppRoutesNames.onboarding);
       }
     }
   }
@@ -49,14 +49,9 @@ class _SplashPageState extends State<SplashPage> {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset(
-              Assets.backgroundImage,
-              fit: BoxFit.cover,
-            ),
+            child: Image.asset(Assets.backgroundImage, fit: BoxFit.cover),
           ),
-          Center(
-            child: Image.asset(Assets.logo),
-          ),
+          Center(child: Image.asset(Assets.logo)),
         ],
       ),
     );

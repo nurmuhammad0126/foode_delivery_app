@@ -38,7 +38,7 @@ class _PopularRestoranScreenState extends State<PopularRestoranScreen> {
           WidgetHomeSearch(
             searchController: _searController,
             onTap: () {
-              context.pushNamed(AppRoutesNames.findFood);
+              context.pushNamed(AppRoutesNames.findFood, extra: false);
             },
           ).paddingSymmetric(horizontal: 24.w, vertical: 32.w),
 

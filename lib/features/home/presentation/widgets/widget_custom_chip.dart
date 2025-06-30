@@ -9,7 +9,7 @@ import '../../../../core/widgets/w_container_with_shadow.dart';
 class WidgetCustomChip extends StatefulWidget {
   final bool isSelected;
   final String text;
-  final VoidCallback onTap;
+  final Function(bool value) onTap;
   const WidgetCustomChip({
     super.key,
     required this.isSelected,
@@ -35,7 +35,7 @@ class _WidgetCustomChipState extends State<WidgetCustomChip> {
       onTap: () {
         isSelected = !isSelected;
         setState(() {});
-        widget.onTap();
+        widget.onTap(isSelected);
       },
       child: WContainerWithShadow(
         shadow: [],

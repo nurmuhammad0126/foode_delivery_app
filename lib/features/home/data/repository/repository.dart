@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../../../core/either/either.dart';
 import '../../../../core/failure/failure.dart';
 import '../../domain/repository/home_repository.dart';
@@ -26,6 +28,7 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<Either<Failure, List<MealModel>>> getMeals() async {
     try {
       final data = await homeRepositoryImpl.getMeals();
+      log("Malumot keldi $data");
       return Right(data);
     } catch (e) {
       return Left(ServerFailure(message: e.toString()));

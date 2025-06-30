@@ -2,15 +2,15 @@ import 'dart:convert';
 
 class MealModel {
   final String id;
-  final String categoryId;
-  final String createdAt;
-  final String description;
-  final String image;
-  final List<String> ingredients;
-  final int likes;
-  final String name;
-  final double price;
-  final String restaurantId;
+  final String? categoryId;
+  final String? createdAt;
+  final String? description;
+  final String? image;
+  final List<String>? ingredients;
+  final int? likes;
+  final String? name;
+  final double? price;
+  final String? restaurantId;
 
   MealModel({
     required this.id,
@@ -59,7 +59,11 @@ class MealModel {
     createdAt: json["createdAt"],
     description: json["description"],
     image: json["image"],
-    ingredients: List<String>.from(json["ingredients"].map((x) => x)),
+    ingredients:
+        json["ingredients"] != null
+            ? List<String>.from(json["ingredients"].map((x) => x))
+            : [],
+
     likes: json["likes"],
     name: json["name"],
     price: json["price"]?.toDouble(),
@@ -71,7 +75,7 @@ class MealModel {
     "createdAt": createdAt,
     "description": description,
     "image": image,
-    "ingredients": List<dynamic>.from(ingredients.map((x) => x)),
+    "ingredients": List<dynamic>.from(ingredients?.map((x) => x) ?? []),
     "likes": likes,
     "name": name,
     "price": price,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
+import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 import '../../../../core/widgets/widget_arrow_back_button.dart';
@@ -10,7 +12,8 @@ import '../widgets/widget_custom_chip.dart';
 import '../widgets/widget_home_search.dart';
 
 class FindFoodScreen extends StatefulWidget {
-  const FindFoodScreen({super.key});
+  final bool isMeal;
+  const FindFoodScreen({super.key, required this.isMeal});
 
   @override
   State<FindFoodScreen> createState() => _FindFoodScreenState();
@@ -35,8 +38,7 @@ class _FindFoodScreenState extends State<FindFoodScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
         children: [
           WidgetArrowBackButton(text: "Find your food").paddingOnly(top: 24.w),
           WidgetHomeSearch(
@@ -49,7 +51,19 @@ class _FindFoodScreenState extends State<FindFoodScreen> {
           Wrap(
             children: [
               for (var i in typeList)
-                WidgetCustomChip(isSelected: false, text: i, onTap: () {}),
+                WidgetCustomChip(
+                  isSelected: false,
+                  text: i,
+                  onTap: (value) {
+                    if (value) {
+                      selected.add(i);
+                      setState(() {});
+                    } else {
+                      selected.remove(i);
+                      setState(() {});
+                    }
+                  },
+                ),
             ],
           ),
           32.height,
@@ -58,7 +72,19 @@ class _FindFoodScreenState extends State<FindFoodScreen> {
           Wrap(
             children: [
               for (var i in locationList)
-                WidgetCustomChip(isSelected: false, text: i, onTap: () {}),
+                WidgetCustomChip(
+                  isSelected: false,
+                  text: i,
+                  onTap: (value) {
+                    if (value) {
+                      selected.add(i);
+                      setState(() {});
+                    } else {
+                      selected.remove(i);
+                      setState(() {});
+                    }
+                  },
+                ),
             ],
           ),
 
@@ -68,26 +94,41 @@ class _FindFoodScreenState extends State<FindFoodScreen> {
           Wrap(
             children: [
               for (var i in foodList)
-                WidgetCustomChip(isSelected: false, text: i, onTap: () {}),
+                WidgetCustomChip(
+                  isSelected: false,
+                  text: i,
+                  onTap: (value) {
+                    if (value) {
+                      selected.add(i);
+                      setState(() {});
+                    } else {
+                      selected.remove(i);
+                      setState(() {});
+                    }
+                  },
+                ),
             ],
           ),
-
-          Spacer(),
-          WScaleAnimation(
-            onTap: () {},
-            child: WGradientContainer(
-              colors:
-                  selected.isEmpty
-                      ? const [AppColors.primary500, AppColors.primary500]
-                      : const [Color(0xFFFF7E95), Color(0xFFFF1843)],
-              child: Text(
-                "Search",
-                style: AppTextStyles.s18w600.copyWith(color: AppColors.white),
-              ),
-            ),
-          ),
-          24.height,
         ],
+      ).paddingSymmetric(horizontal: 24.w),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: WScaleAnimation(
+        onTap: () {
+          context.pushNamed(
+            AppRoutesNames.findFoodFilter,
+            extra: {"selected": selected, "isMeal": widget.isMeal},
+          );
+        },
+        child: WGradientContainer(
+          colors:
+              selected.isEmpty
+                  ? const [AppColors.primary500, AppColors.primary500]
+                  : const [Color(0xFFFF7E95), Color(0xFFFF1843)],
+          child: Text(
+            "Search",
+            style: AppTextStyles.s18w600.copyWith(color: AppColors.white),
+          ),
+        ),
       ).paddingSymmetric(horizontal: 24.w),
     );
   }

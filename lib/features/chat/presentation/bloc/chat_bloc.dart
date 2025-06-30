@@ -10,12 +10,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   List<ChatModel> chatList = [];
 
   ChatBloc() : super(ChatLoading()) {
-    // WebSocket ulanish
+
     WebSocketServices.getInstance(
       "wss://s14781.nyc1.piesocket.com/v3/1?api_key=kLgGoDV7ablppHkpGtqwvb1kGOru8svXMwpu47C3&notify_self=1",
     );
-
-    // Stream tinglash
     WebSocketServices.chanel.stream.listen(
       (event) {
         if (event is String && event.isNotEmpty) {

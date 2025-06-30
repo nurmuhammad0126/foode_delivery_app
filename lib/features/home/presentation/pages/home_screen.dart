@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
@@ -7,15 +10,13 @@ import 'package:task_for_uicgroup/core/constants/assets.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
 import 'package:task_for_uicgroup/core/routes/route_names.dart';
-import 'package:task_for_uicgroup/core/routes/router.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
-import 'package:task_for_uicgroup/features/auth/data/datasource/local_datasource.dart';
-import 'package:task_for_uicgroup/features/auth/presentation/pages/login_screen.dart';
 import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 import 'package:task_for_uicgroup/features/home/presentation/widgets/widget_home_search.dart';
 
 import '../../../../core/widgets/w_cached_image.dart';
+import '../blocs/bloc/home_bloc.dart';
 import '../widgets/widget_restoran_details_container.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,24 +28,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searController = TextEditingController();
-  final AuthLocalDatasource authLocalDatasource = AuthLocalDatasource();
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeBloc>().add(GetMealsEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQueryHeight = MediaQuery.of(context).size.height;
     final mediaQueryWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              authLocalDatasource.removeToken();
-              // asdfasdfsdffdsdf
-              context.goToLogin();
-            },
-            icon: Icon(Icons.logout),
-          ),
-        ],
-      ),
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         child: Column(
@@ -136,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ListView.builder(
                 clipBehavior: Clip.none,
                 scrollDirection: Axis.horizontal,
-                itemCount: restaurants.length,
+                itemCount: restaurants.length~/2,
                 itemBuilder: (context, index) {
                   final restoran = restaurants[index];
                   return WidgetRestoranDetailsContainer(
@@ -166,48 +160,86 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
 
-            ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero,
-              clipBehavior: Clip.none,
-              shrinkWrap: true,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return WContainerWithShadow(
-                  border: Border.all(color: AppColors.white),
-                  height: mediaQueryHeight * 0.1,
-                  margin: EdgeInsets.only(bottom: 24.w),
-                  color: AppColors.white,
-                  child: Row(
-                    children: [
-                      WCachedImage(
-                        borderRadius: BorderRadius.circular(14),
-                        width: mediaQueryWidth * 0.2,
-                        imageUrl:
-                            "https://images.ctfassets.net/0tc4847zqy12/1srWoukcEfZ0fjWpSn0ppM/61e0572e4d73e43093efe7e77cfb43c3/F25_HabaneroLimeSteak_QDOBA-Mexican-Eats_MenuPage.png?w=800&q=25",
-                      ),
-                      20.width,
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("data", style: AppTextStyles.s18w600),
-                          Text(
-                            "data",
-                            style: AppTextStyles.s14w400.copyWith(
-                              color: AppColors.gray,
+            BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                if (state.homeStatus == HomeStatus.success) {
+                  return ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    clipBehavior: Clip.none,
+                    shrinkWrap: true,
+                    itemCount: state.meals.length~/2,
+                    itemBuilder: (context, index) {
+                      final meal = state.meals[index];
+                      return WContainerWithShadow(
+                        border: Border.all(color: AppColors.white),
+                        height: mediaQueryHeight * 0.1,
+                        margin: EdgeInsets.only(bottom: 24.w),
+                        color: AppColors.white,
+                        child: Row(
+                          children: [
+                            WCachedImage(
+                              borderRadius: BorderRadius.circular(14),
+                              width: mediaQueryWidth * 0.2,
+                              imageUrl: meal.image ?? "",
                             ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      Text(
-                        "\$77",
-                        style: AppTextStyles.s10w600.copyWith(
-                          color: AppColors.primary,
-                          fontSize: 28.o,
+                            20.width,
+                            SizedBox(
+                              width: mediaQueryWidth * 0.3,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    meal.name ?? "",
+                                    style: AppTextStyles.s18w600,
+                                  ),
+                                  Text(
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+
+                                    meal.description ?? "",
+                                    style: AppTextStyles.s14w400.copyWith(
+                                      color: AppColors.gray,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              "\$77",
+                              style: AppTextStyles.s10w600.copyWith(
+                                color: AppColors.primary,
+                                fontSize: 28.o,
+                              ),
+                            ).paddingOnly(right: 12.w),
+                          ],
                         ),
-                      ).paddingOnly(right: 12.w),
-                    ],
+                      );
+                    },
+                  );
+                }
+                if (state.homeStatus == HomeStatus.loading) {
+                  return Center(child: CircularProgressIndicator.adaptive());
+                }
+                if (state.homeStatus == HomeStatus.error) {
+                  log(state.errorMessage);
+                  return Center(
+                    child: Text(
+                      state.errorMessage,
+                      style: AppTextStyles.s26w400,
+                    ),
+                  );
+                }
+                return SizedBox(
+                  child: Text(
+                    "Hozircha bizda mahsulotlar yoq !!!",
+                    style: AppTextStyles.s22w800.copyWith(
+                      color: AppColors.primary,
+                    ),
                   ),
                 );
               },

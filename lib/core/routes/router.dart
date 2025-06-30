@@ -6,6 +6,7 @@ import 'package:task_for_uicgroup/features/auth/presentation/pages/set_loacation
 import 'package:task_for_uicgroup/features/auth/presentation/pages/uploade_image_screen.dart';
 import 'package:task_for_uicgroup/features/auth/presentation/pages/verifiy_bio_screen.dart';
 import 'package:task_for_uicgroup/features/chat/presentation/pages/chats_screen.dart';
+import 'package:task_for_uicgroup/features/home/presentation/pages/filter_find_food_screen.dart';
 import 'package:task_for_uicgroup/features/home/presentation/pages/home_notification_screen.dart';
 import 'package:task_for_uicgroup/features/home/presentation/pages/popular_restoran_scree.dart';
 
@@ -48,7 +49,7 @@ import '../../features/profile/presentation/pages/profile_screen.dart';
 
 /// GoRouter konfiguratsiyasi
 final GoRouter appRouter = GoRouter(
-  initialLocation: AppRoutesNames.chat,
+  initialLocation: AppRoutesNames.home,
   debugLogDiagnostics: true,
 
   // Redirect funksiyasi - Foydalanuvchi holatini tekshirish uchun
@@ -168,7 +169,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutesNames.findFood,
       name: AppRoutesNames.findFood,
-      builder: (context, state) => const FindFoodScreen(),
+      builder: (context, state) {
+        final data = state.extra as bool?;
+        return FindFoodScreen(isMeal: data ?? false);
+      },
     ),
 
     GoRoute(
@@ -248,6 +252,17 @@ final GoRouter appRouter = GoRouter(
               name: AppRoutesNames.home,
               builder: (context, state) => const HomeScreen(),
               routes: [
+                GoRoute(
+                  path: AppRoutesNames.findFoodFilter,
+                  name: AppRoutesNames.findFoodFilter,
+                  builder: (context, state) {
+                    final data = state.extra as Map<String, dynamic>;
+                    return FilterFindFoodScreen(
+                      isMeals: data["isMeals"],
+                      selected: data["selected"],
+                    );
+                  },
+                ),
                 GoRoute(
                   path: AppRoutesNames.notification,
                   name: AppRoutesNames.notification,

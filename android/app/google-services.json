@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "320635427911",
+    "project_id": "foode-food-delivery",
+    "storage_bucket": "foode-food-delivery.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320635427911:android:37c5e6be75fd008e176562",
+        "android_client_info": {
+          "package_name": "uz.itwithnurmuhammad.task_for_uicgroup"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8R5hGFp7h-Zs6Kq6B1uOb8hUPJl0zmxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

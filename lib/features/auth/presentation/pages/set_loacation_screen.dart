@@ -10,13 +10,13 @@ import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
 import 'package:task_for_uicgroup/core/routes/route_names.dart';
-import 'package:task_for_uicgroup/core/routes/router.dart';
 import 'package:task_for_uicgroup/core/utils/global_user.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 import 'package:task_for_uicgroup/features/auth/presentation/widgets/widget_for_set_button.dart';
 import 'package:task_for_uicgroup/features/profile/data/model/user_model.dart';
+import 'package:task_for_uicgroup/features/profile/data/repository/user_local_repository.dart';
 import 'package:task_for_uicgroup/features/profile/presentation/bloc/user_bloc.dart';
 import 'package:task_for_uicgroup/features/profile/presentation/bloc/user_event.dart';
 import '../../../../core/widgets/widget_arrow_back_button.dart';
@@ -29,6 +29,7 @@ class SetLocationScreen extends StatefulWidget {
 }
 
 class _SetLocationScreenState extends State<SetLocationScreen> {
+  final userLocalRepo = UserLocalRepository();
   GoogleMapController? mapController;
   LatLng? currentPosition;
   LatLng? selectedPosition;
@@ -92,7 +93,6 @@ class _SetLocationScreenState extends State<SetLocationScreen> {
     }
   }
 
-  // Marker qo'shish
   void _addMarker(LatLng position) {
     setState(() {
       markers.clear();
@@ -107,7 +107,6 @@ class _SetLocationScreenState extends State<SetLocationScreen> {
     });
   }
 
-  // Koordinatalardan manzil olish
   Future<void> _getAddressFromLatLng(LatLng position) async {
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(
@@ -141,7 +140,6 @@ class _SetLocationScreenState extends State<SetLocationScreen> {
     }
   }
 
-  // Xarita bosilganda
   void _onMapTapped(LatLng position) {
     setState(() {
       selectedPosition = position;
@@ -150,7 +148,6 @@ class _SetLocationScreenState extends State<SetLocationScreen> {
     _getAddressFromLatLng(position);
   }
 
-  // Joriy joylashuvga qaytish
   void _goToCurrentLocation() {
     if (currentPosition != null && mapController != null) {
       mapController!.animateCamera(
@@ -166,7 +163,6 @@ class _SetLocationScreenState extends State<SetLocationScreen> {
     }
   }
 
-  // Ruxsat dialog
   void _showPermissionDialog() {
     showDialog(
       context: context,
@@ -193,7 +189,6 @@ class _SetLocationScreenState extends State<SetLocationScreen> {
     );
   }
 
-  // Joylashuv xizmati dialog
   void _showLocationServiceDialog() {
     showDialog(
       context: context,
@@ -211,7 +206,6 @@ class _SetLocationScreenState extends State<SetLocationScreen> {
     );
   }
 
-  // Xatolik dialog
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
@@ -229,31 +223,10 @@ class _SetLocationScreenState extends State<SetLocationScreen> {
     );
   }
 
-  // Joylashuvni saqlash
-  void _saveLocation() {
+  void _saveLocation() async {
     if (selectedPosition != null) {
-      // Bu yerda siz tanlangan koordinatalar va manzilni ishlatishingiz mumkin
-      print(
-        'Tanlangan koordinatalar: ${selectedPosition!.latitude}, ${selectedPosition!.longitude}',
-      );
-      print('Tanlangan manzil: $selectedAddress');
-
-      // Keyingi sahifaga o'tish
-      context.push(
-        AppRoutesNames.congrats,
-        extra: {
-          "onTap": () {
-            context.goToHome();
-          },
-          "title2": "Go homepage",
-          "title1": "Your profile is ready to use",
-          "location": {
-            "latitude": selectedPosition!.latitude,
-            "longitude": selectedPosition!.longitude,
-            "address": selectedAddress,
-          },
-        },
-      );
+      await userLocalRepo.saveProfileCompleted(true);
+      context.goNamed(AppRoutesNames.home);
     } else {
       _showErrorDialog("Iltimos, joylashuvni tanlang");
     }
@@ -372,6 +345,7 @@ class _SetLocationScreenState extends State<SetLocationScreen> {
           const Spacer(),
           WScaleAnimation(
             onTap: () {
+              
               updateGlobalUser(
                 location: Locationn(
                   lat: selectedPosition!.latitude,
@@ -380,9 +354,9 @@ class _SetLocationScreenState extends State<SetLocationScreen> {
                 adress: selectedAddress,
               );
               final data = getGlobalUser();
-              print({'emaillll: ${data!.phoneNumber}'});
-              context.read<UserBloc>().add(AddUserEvent(data));
-              
+              context.read<UserBloc>().add(AddUserEvent(data!));
+              context.goNamed(AppRoutesNames.home);
+              _saveLocation();
             },
 
             child: WGradientContainer(

@@ -59,6 +59,7 @@ class WTextField extends StatefulWidget {
   final bool? isDense;
 
   const WTextField({
+
     this.validator,
     this.onFocusChange,
     this.controller,
@@ -193,6 +194,7 @@ class _WTextFieldState extends State<WTextField>
                   ClipRRect(
                     borderRadius: BorderRadius.circular(widget.borderRadius),
                     child: TextFormField(
+                      
                       validator: widget.validator,
                       readOnly: widget.readonly ?? false,
                       onTap: widget.onTap ?? () {},

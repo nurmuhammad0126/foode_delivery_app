@@ -1,3 +1,5 @@
+import 'package:task_for_uicgroup/features/profile/data/model/user_model.dart';
+
 import '../../../../core/either/either.dart';
 import '../../../../core/failure/failure.dart';
 import '../../domain/repository/home_repository.dart';
@@ -5,7 +7,6 @@ import '../datasource/home_datasource.dart';
 import '../models/meal_model.dart';
 import '../models/restoran_model.dart';
 import '../models/review_model.dart';
-import '../models/user_model.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   final HomeDatasourceImpl homeRepositoryImpl;

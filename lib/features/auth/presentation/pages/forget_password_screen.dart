@@ -6,6 +6,7 @@ import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/core/widgets/w_rich_text.dart';
+import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 import 'package:task_for_uicgroup/core/widgets/w_text_field.dart';
 import 'package:task_for_uicgroup/core/widgets/widget_arrow_back_button.dart';
 import 'package:task_for_uicgroup/features/auth/presentation/cubits/forget_password_cubit.dart';
@@ -91,13 +92,16 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   controller: _emailController,
                 ),
                 const Spacer(),
-                WGradientContainer(
-                  isTextVisible: state is! ForgetPasswordLoading,
+                WScaleAnimation(
                   onTap: _onNextTap,
-                  child: Text(
-                    "Next",
-                    style: AppTextStyles.s18w600.copyWith(
-                      color: AppColors.white,
+                  child: WGradientContainer(
+                    isTextVisible: state is! ForgetPasswordLoading,
+
+                    child: Text(
+                      "Next",
+                      style: AppTextStyles.s18w600.copyWith(
+                        color: AppColors.white,
+                      ),
                     ),
                   ),
                 ),

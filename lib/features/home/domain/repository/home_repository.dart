@@ -1,10 +1,10 @@
 import 'package:task_for_uicgroup/core/either/either.dart';
 import 'package:task_for_uicgroup/core/failure/failure.dart';
+import 'package:task_for_uicgroup/features/profile/data/model/user_model.dart';
 
 import '../../data/models/meal_model.dart';
 import '../../data/models/restoran_model.dart';
 import '../../data/models/review_model.dart';
-import '../../data/models/user_model.dart';
 
 abstract class HomeRepository {
   Future<Either<Failure, List<RestaurantModel>>> getRestaurnts();

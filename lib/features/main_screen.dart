@@ -15,7 +15,7 @@ class MainScreen extends StatelessWidget {
       backgroundColor: Colors.grey[100],
       body: Stack(
         children: [
-          navigationShell, // Bu GoRouter orqali keladigan branch'lar
+          navigationShell, 
           Positioned(
             bottom: 15,
             left: 20,

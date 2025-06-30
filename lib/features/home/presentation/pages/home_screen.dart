@@ -10,7 +10,6 @@ import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/features/auth/data/datasource/local_datasource.dart';
-import 'package:task_for_uicgroup/features/auth/presentation/pages/login_screen.dart';
 import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 import 'package:task_for_uicgroup/features/home/presentation/widgets/widget_home_search.dart';
 
@@ -39,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               authLocalDatasource.removeToken();
               // asdfasdfsdffdsdf
-              Navigator.push(context, MaterialPageRoute(builder: (x) => LoginScreen()));
+              context.goNamed(AppRoutesNames.login);
             },
             icon: Icon(Icons.logout),
           ),

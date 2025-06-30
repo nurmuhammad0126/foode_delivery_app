@@ -9,13 +9,16 @@ import 'package:task_for_uicgroup/core/constants/assets.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
 import 'package:task_for_uicgroup/core/routes/route_names.dart';
+import 'package:task_for_uicgroup/core/utils/global_user.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/core/widgets/w_rich_text.dart';
+import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 import 'package:task_for_uicgroup/core/widgets/w_text_field.dart';
 import 'package:task_for_uicgroup/features/auth/data/model/auth_model.dart';
 import 'package:task_for_uicgroup/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:task_for_uicgroup/features/auth/presentation/cubits/auth_cubits.dart';
+import 'package:task_for_uicgroup/features/profile/data/model/user_model.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -32,13 +35,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _signUp() {
     if (_formKey.currentState!.validate()) {
       context.read<AuthBloc>().add(
-            SignUpRequested(
-              AuthModel(
-                email: _emailController.text,
-                password: _passwordController.text,
-              ),
-            ),
-          );
+        SignUpRequested(
+          AuthModel(
+            email: _emailController.text,
+            password: _passwordController.text,
+          ),
+        ),
+      );
     }
   }
 
@@ -70,14 +73,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
               );
 
               /// GoRouter orqali navigatsiya
-              context.go(AppRoutesNames.home);
+              context.go(AppRoutesNames.verifyBio);
+              setGlobalUser(
+                UserModel(
+                  createdAt: DateTime.now(),
+                  email: _emailController.text,
+                ),
+              );
             }
           },
           builder: (context, state) {
             return Column(
               children: [
-                Image.asset(Assets.logo)
-                    .paddingOnly(left: 90.w, right: 90.w, top: 24.w),
+                Image.asset(
+                  Assets.logo,
+                ).paddingOnly(left: 90.w, right: 90.w, top: 24.w),
                 Text("Sign up for free", style: AppTextStyles.s22w600),
                 32.height,
                 Form(
@@ -85,8 +95,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      WRichText(text1: "Email ", text2: "*")
-                          .paddingOnly(left: 24.w),
+                      WRichText(
+                        text1: "Email ",
+                        text2: "*",
+                      ).paddingOnly(left: 24.w),
                       8.height,
                       WTextField(
                         controller: _emailController,
@@ -95,16 +107,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           if (value == null || value.isEmpty) {
                             return 'Email bo‘sh bo‘lishi mumkin emas';
                           }
-                          if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                              .hasMatch(value)) {
+                          if (!RegExp(
+                            r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                          ).hasMatch(value)) {
                             return 'Email noto‘g‘ri kiritilgan';
                           }
                           return null;
                         },
                       ),
                       20.height,
-                      WRichText(text1: "Password ", text2: "*")
-                          .paddingOnly(left: 24.w),
+                      WRichText(
+                        text1: "Password ",
+                        text2: "*",
+                      ).paddingOnly(left: 24.w),
                       8.height,
                       BlocBuilder<PasswordVisibilityCubit, bool>(
                         builder: (context, isVisible) {
@@ -122,9 +137,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               return null;
                             },
                             suffixIcon: GestureDetector(
-                              onTap: () => context
-                                  .read<PasswordVisibilityCubit>()
-                                  .toggle(),
+                              onTap:
+                                  () =>
+                                      context
+                                          .read<PasswordVisibilityCubit>()
+                                          .toggle(),
                               child: Icon(
                                 isVisible
                                     ? Icons.visibility_off
@@ -159,16 +176,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 20.height,
                 BlocBuilder<ToggleCubit, bool>(
                   builder: (context, isChecked) {
-                    return WGradientContainer(
-                      colors: isChecked
-                          ? [Color(0xFFFF7E95), Color(0xFFFF1843)]
-                          : [Color(0xFFFF7E95), Color(0xFFFF7E95)],
-                      isTextVisible: state is! AuthLoading,
+                    return WScaleAnimation(
                       onTap: isChecked ? _signUp : () {},
-                      child: Text(
-                        "Sign up",
-                        style: AppTextStyles.s18w600
-                            .copyWith(color: AppColors.white),
+                      child: WGradientContainer(
+                        colors:
+                            isChecked
+                                ? [Color(0xFFFF7E95), Color(0xFFFF1843)]
+                                : [Color(0xFFFF7E95), Color(0xFFFF7E95)],
+                        isTextVisible: state is! AuthLoading,
+
+                        child: Text(
+                          "Sign up",
+                          style: AppTextStyles.s18w600.copyWith(
+                            color: AppColors.white,
+                          ),
+                        ),
                       ),
                     );
                   },
@@ -211,8 +233,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 WRichText(
                   text1: "Already have an account? ",
                   text2: "Sign in",
-                  textStyle1:
-                      AppTextStyles.s16w500.copyWith(color: AppColors.gray),
+                  textStyle1: AppTextStyles.s16w500.copyWith(
+                    color: AppColors.gray,
+                  ),
                   onTapText2: () {
                     context.push(AppRoutesNames.login);
                   },

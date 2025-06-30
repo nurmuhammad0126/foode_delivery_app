@@ -132,13 +132,13 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutesNames.setLocation,
       name: AppRoutesNames.setLocation,
-      builder: (context, state) => const SetLoacationScreen(),
+      builder: (context, state) => const SetLocationScreen(),
     ),
 
     GoRoute(
       path: AppRoutesNames.uploadImage,
       name: AppRoutesNames.uploadImage,
-      builder: (context, state) => const UploadeImageScreen(),
+      builder: (context, state) => const UploadImageScreen(),
     ),
 
     GoRoute(

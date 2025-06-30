@@ -8,7 +8,7 @@ class WGradientContainer extends StatelessWidget {
   final List<Color> colors;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
-  final void Function()? onTap;
+
   final bool isTextVisible;
   const WGradientContainer({
     super.key,
@@ -19,7 +19,6 @@ class WGradientContainer extends StatelessWidget {
     this.padding,
     this.width,
     this.margin,
-    this.onTap,
     this.isTextVisible = true,
   });
 
@@ -27,7 +26,6 @@ class WGradientContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: borderRadius ?? BorderRadius.circular(32),
-      onTap: onTap ?? () {},
       child: Container(
         height: height,
         width: width ?? double.infinity,

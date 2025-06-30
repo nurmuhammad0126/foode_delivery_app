@@ -33,13 +33,13 @@ class _LoginScreenState extends State<LoginScreen> {
   void _login() {
     if (_formKey.currentState!.validate()) {
       context.read<AuthBloc>().add(
-            SignInRequested(
-              AuthModel(
-                email: _emailController.text,
-                password: _passwordController.text,
-              ),
-            ),
-          );
+        SignInRequested(
+          AuthModel(
+            email: _emailController.text,
+            password: _passwordController.text,
+          ),
+        ),
+      );
     }
   }
 
@@ -78,21 +78,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      WRichText(text1: "Email ", text2: "*").paddingOnly(left: 24.w),
+                      WRichText(
+                        text1: "Email ",
+                        text2: "*",
+                      ).paddingOnly(left: 24.w),
                       8.height,
                       WTextField(
                         controller: _emailController,
                         hintText: "Email or Phone Number",
                         validator: (value) {
-                          if (value == null || value.isEmpty) return 'Email bo‘sh bo‘lishi mumkin emas';
-                          if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                          if (value == null || value.isEmpty)
+                            return 'Email bo‘sh bo‘lishi mumkin emas';
+                          if (!RegExp(
+                            r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                          ).hasMatch(value)) {
                             return 'Email noto‘g‘ri kiritilgan';
                           }
                           return null;
                         },
                       ),
                       20.height,
-                      WRichText(text1: "Password ", text2: "*").paddingOnly(left: 24.w),
+                      WRichText(
+                        text1: "Password ",
+                        text2: "*",
+                      ).paddingOnly(left: 24.w),
                       8.height,
                       BlocBuilder<PasswordVisibilityCubit, bool>(
                         builder: (context, isVisible) {
@@ -101,14 +110,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             hintText: "Password",
                             isObscureText: !isVisible,
                             validator: (value) {
-                              if (value == null || value.isEmpty) return 'Parol bo‘sh bo‘lishi mumkin emas';
-                              if (value.length < 6) return 'Parol kamida 6 ta belgidan iborat bo‘lishi kerak';
+                              if (value == null || value.isEmpty)
+                                return 'Parol bo‘sh bo‘lishi mumkin emas';
+                              if (value.length < 6)
+                                return 'Parol kamida 6 ta belgidan iborat bo‘lishi kerak';
                               return null;
                             },
                             suffixIcon: GestureDetector(
-                              onTap: () => context.read<PasswordVisibilityCubit>().toggle(),
+                              onTap:
+                                  () =>
+                                      context
+                                          .read<PasswordVisibilityCubit>()
+                                          .toggle(),
                               child: Icon(
-                                isVisible ? Icons.visibility_off : Icons.visibility,
+                                isVisible
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
                                 color: AppColors.gray,
                               ),
                             ),
@@ -125,7 +142,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Checkbox(
                           value: state,
-                          onChanged: (value) => context.read<ToggleCubit>().toggle(value!),
+                          onChanged:
+                              (value) =>
+                                  context.read<ToggleCubit>().toggle(value!),
                           checkColor: AppColors.white,
                           activeColor: AppColors.primary,
                         ),
@@ -137,15 +156,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 20.height,
                 BlocBuilder<ToggleCubit, bool>(
                   builder: (context, isChecked) {
-                    return WGradientContainer(
+                    return WScaleAnimation(
                       onTap: isChecked ? _login : () {},
-                      colors: isChecked
-                          ? [Color(0xFFFF7E95), Color(0xFFFF1843)]
-                          : [Color(0xFFFF7E95), Color(0xFFFF7E95)],
-                      isTextVisible: state is! AuthLoading,
-                      child: Text(
-                        "Sign in",
-                        style: AppTextStyles.s18w600.copyWith(color: AppColors.white),
+
+                      child: WGradientContainer(
+                        colors:
+                            isChecked
+                                ? [Color(0xFFFF7E95), Color(0xFFFF1843)]
+                                : [Color(0xFFFF7E95), Color(0xFFFF7E95)],
+                        isTextVisible: state is! AuthLoading,
+                        child: Text(
+                          "Sign in",
+                          style: AppTextStyles.s18w600.copyWith(
+                            color: AppColors.white,
+                          ),
+                        ),
                       ),
                     );
                   },
@@ -155,7 +180,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   onTap: () => context.push(AppRoutesNames.forgetPassword),
                   child: Text(
                     "Forgot the password?",
-                    style: AppTextStyles.s16w600.copyWith(color: AppColors.primary),
+                    style: AppTextStyles.s16w600.copyWith(
+                      color: AppColors.primary,
+                    ),
                   ),
                 ),
                 32.height,
@@ -196,7 +223,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 WRichText(
                   text1: "Don’t have an account? ",
                   text2: "Sign up",
-                  textStyle1: AppTextStyles.s16w500.copyWith(color: AppColors.gray),
+                  textStyle1: AppTextStyles.s16w500.copyWith(
+                    color: AppColors.gray,
+                  ),
                   onTapText2: () => context.push(AppRoutesNames.register),
                 ),
               ],

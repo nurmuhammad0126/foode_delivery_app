@@ -11,7 +11,7 @@ import '../../../../core/constants/app_textstyles.dart';
 import '../../../../core/widgets/w_text_field.dart';
 
 class HomeNotificationScreen extends StatefulWidget {
-  const HomeNotificationScreen({super.key,});
+  const HomeNotificationScreen({super.key});
 
   @override
   State<HomeNotificationScreen> createState() => _HomeNotificationScreenState();
@@ -26,7 +26,7 @@ class _HomeNotificationScreenState extends State<HomeNotificationScreen> {
       backgroundColor: AppColors.white,
       body: Column(
         children: [
-          24.height,
+          64.height,
           WidgetArrowBackButton(text: "Notification"),
           24.height,
           WTextField(

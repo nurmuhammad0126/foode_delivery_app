@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:task_for_uicgroup/core/constants/network_path.dart';
 import 'package:task_for_uicgroup/core/dio_client/dio_client.dart';
 import 'package:task_for_uicgroup/features/home/data/models/review_model.dart';
@@ -16,12 +18,14 @@ abstract class HomeDatasource {
   Future<MealModel> getMeal(String id);
   Future<UserModel> getUser(String id);
   Future<ReviewModel> getReview(String id);
+
+  factory HomeDatasource(DioClient dioClient) => HomeDatasourceImpl(dioClient);
 }
 
 class HomeDatasourceImpl implements HomeDatasource {
   final DioClient dioClient;
 
-  HomeDatasourceImpl({required this.dioClient});
+  HomeDatasourceImpl(this.dioClient);
 
   @override
   Future<List<ReviewModel>> getReviews() async {
@@ -66,8 +70,11 @@ class HomeDatasourceImpl implements HomeDatasource {
 
       data.forEach((key, value) {
         value["id"] = key;
-        result.add(value);
+        final meal = MealModel.fromMap(value);
+        result.add(meal);
       });
+
+      log("Malumot keldi $result");
       return result;
     } catch (e) {
       throw "Get meals Functionsida xato boldi $e";

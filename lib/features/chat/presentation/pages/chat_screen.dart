@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
@@ -8,6 +9,13 @@ import 'package:task_for_uicgroup/core/routes/route_names.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_scale_animation.dart';
 import 'package:task_for_uicgroup/core/widgets/widget_arrow_back_button.dart';
+import 'package:task_for_uicgroup/features/chat/presentation/bloc/chat_bloc.dart';
+import 'package:task_for_uicgroup/features/chat/presentation/bloc/chat_state.dart';
+import 'package:uuid/uuid.dart';
+
+import '../../data/models/chat_model.dart';
+import '../bloc/chat_event.dart';
+import '../widgets/message_widget.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -19,13 +27,14 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
+    final messageController = TextEditingController();
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           children: [
-            30.height,
+            50.height,
             WidgetArrowBackButton(text: "Chat"),
             32.height,
             WContainerWithShadow(
@@ -83,6 +92,38 @@ class _ChatScreenState extends State<ChatScreen> {
                 ],
               ),
             ),
+            Expanded(
+              child: BlocBuilder<ChatBloc, ChatState>(
+                builder: (context, state) {
+                  if (state is ChatLoading) {
+                    return SizedBox.shrink();
+                  } else if (state is ChatSuccess) {
+                    return ListView.separated(
+                      reverse: true,
+                      padding: EdgeInsets.only(
+                        bottom: 130,
+                        right: 20,
+                        left: 20,
+                      ),
+                      separatorBuilder: (context, index) => 20.height,
+                      itemCount: state.chatList.length,
+                      itemBuilder: (context, index) {
+                        final data = state.chatList[index];
+                        final isMe = data.name == "Nurmuhammad";
+                        return Row(
+                          mainAxisAlignment:
+                              isMe
+                                  ? MainAxisAlignment.end
+                                  : MainAxisAlignment.start,
+                          children: [MessageWidget(isMe: isMe, data: data)],
+                        );
+                      },
+                    );
+                  }
+                  return Text('Serverda xatolik');
+                },
+              ),
+            ),
           ],
         ),
       ),
@@ -95,8 +136,27 @@ class _ChatScreenState extends State<ChatScreen> {
           border: Border(),
           color: Colors.white,
           child: TextField(
+            controller: messageController,
             decoration: InputDecoration(
-              suffixIcon: Icon(Icons.send, color: AppColors.primary, size: 32),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  context.read<ChatBloc>().add(
+                    SendMessage(
+                      ChatModel(
+                        id: const Uuid().v4(),
+                        message: messageController.text.trim(),
+                        name: "Nurmuhammad",
+                        time: DateTime.now().toIso8601String(),
+                      ),
+                    ),
+                  );
+                  messageController.clear();
+                },
+
+                icon: Icon(Icons.send),
+                color: AppColors.primary,
+                // size: 32,
+              ),
               hintText: 'Type message ...',
               hintStyle: AppTextStyles.s16w400.copyWith(
                 color: AppColors.neutralWhite,

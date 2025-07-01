@@ -21,7 +21,7 @@ class AppRoutesNames {
   static const String notification = '/notification';
   static const String popularMenu = '/popular-menu';
   static const String popularRestaurant = '/popular-restaurant';
-
+ static const String findFoodFilter = "/find-food-filter";
   // 💬 CHAT ROUTES (Main Shell)
   static const String chat = '/chat';
   static const String chatCalling = '/chat-calling';

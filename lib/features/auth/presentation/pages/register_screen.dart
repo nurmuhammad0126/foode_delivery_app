@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:task_for_uicgroup/core/utils/global_user.dart';
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/constants/assets.dart';
 import 'package:task_for_uicgroup/core/extensions/num_extensions.dart';
 import 'package:task_for_uicgroup/core/extensions/widget_extensions.dart';
 import 'package:task_for_uicgroup/core/routes/route_names.dart';
-import 'package:task_for_uicgroup/core/utils/global_user.dart';
 import 'package:task_for_uicgroup/core/widgets/w_container_with_shadow.dart';
 import 'package:task_for_uicgroup/core/widgets/w_gradient_container.dart';
 import 'package:task_for_uicgroup/core/widgets/w_rich_text.dart';
@@ -18,7 +18,7 @@ import 'package:task_for_uicgroup/core/widgets/w_text_field.dart';
 import 'package:task_for_uicgroup/features/auth/data/model/auth_model.dart';
 import 'package:task_for_uicgroup/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:task_for_uicgroup/features/auth/presentation/cubits/auth_cubits.dart';
-import 'package:task_for_uicgroup/features/profile/data/model/user_model.dart';
+import 'package:task_for_uicgroup/features/home/data/models/user_model.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -74,7 +74,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               /// GoRouter orqali navigatsiya
               context.go(AppRoutesNames.verifyBio);
-              setGlobalUser(
+              SetGlobalUser(
                 UserModel(
                   createdAt: DateTime.now(),
                   email: _emailController.text,
@@ -177,19 +177,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 BlocBuilder<ToggleCubit, bool>(
                   builder: (context, isChecked) {
                     return WScaleAnimation(
-                      onTap: isChecked ? _signUp : () {},
+                        onTap: isChecked ? _signUp : () {},
                       child: WGradientContainer(
-                        colors:
-                            isChecked
-                                ? [Color(0xFFFF7E95), Color(0xFFFF1843)]
-                                : [Color(0xFFFF7E95), Color(0xFFFF7E95)],
+                        colors: isChecked
+                            ? [Color(0xFFFF7E95), Color(0xFFFF1843)]
+                            : [Color(0xFFFF7E95), Color(0xFFFF7E95)],
                         isTextVisible: state is! AuthLoading,
-
                         child: Text(
                           "Sign up",
-                          style: AppTextStyles.s18w600.copyWith(
-                            color: AppColors.white,
-                          ),
+                          style: AppTextStyles.s18w600
+                              .copyWith(color: AppColors.white),
                         ),
                       ),
                     );

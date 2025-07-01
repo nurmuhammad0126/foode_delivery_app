@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:task_for_uicgroup/core/constants/app_colors.dart';
 import 'package:task_for_uicgroup/core/constants/app_textstyles.dart';
 import 'package:task_for_uicgroup/core/constants/assets.dart';
@@ -20,7 +19,6 @@ import 'package:task_for_uicgroup/features/auth/presentation/cubits/auth_cubits.
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -61,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
             }
 
             if (state is AuthSuccess) {
-              context.go(AppRoutesNames.home); 
+              context.go(AppRoutesNames.home);
             }
           },
           builder: (context, state) {
@@ -157,8 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 BlocBuilder<ToggleCubit, bool>(
                   builder: (context, isChecked) {
                     return WScaleAnimation(
-                      onTap: isChecked ? _login : () {},
-
+                      onTap: _login,
                       child: WGradientContainer(
                         colors:
                             isChecked
@@ -177,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 20.height,
                 WScaleAnimation(
-                  onTap: () => context.push(AppRoutesNames.forgetPassword),
+                  onTap: () => context.pushNamed(AppRoutesNames.forgetPassword),
                   child: Text(
                     "Forgot the password?",
                     style: AppTextStyles.s16w600.copyWith(

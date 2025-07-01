@@ -1,4 +1,4 @@
-import 'package:task_for_uicgroup/features/profile/data/model/user_model.dart';
+import 'dart:developer';
 
 import '../../../../core/either/either.dart';
 import '../../../../core/failure/failure.dart';
@@ -27,6 +27,7 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<Either<Failure, List<MealModel>>> getMeals() async {
     try {
       final data = await homeRepositoryImpl.getMeals();
+      log("Malumot keldi $data");
       return Right(data);
     } catch (e) {
       return Left(ServerFailure(message: e.toString()));

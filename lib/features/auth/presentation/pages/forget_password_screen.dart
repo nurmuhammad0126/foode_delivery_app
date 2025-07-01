@@ -93,10 +93,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 ),
                 const Spacer(),
                 WScaleAnimation(
-                  onTap: _onNextTap,
+                    onTap: _onNextTap,
                   child: WGradientContainer(
                     isTextVisible: state is! ForgetPasswordLoading,
-
                     child: Text(
                       "Next",
                       style: AppTextStyles.s18w600.copyWith(

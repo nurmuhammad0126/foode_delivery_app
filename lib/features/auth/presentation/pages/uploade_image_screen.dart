@@ -110,24 +110,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
     }
   }
 
-  // String _getMimeType(String filePath) {
-  //   String extension = filePath.split('.').last.toLowerCase();
-  //   switch (extension) {
-  //     case 'jpg':
-  //     case 'jpeg':
-  //       return 'image/jpeg';
-  //     case 'png':
-  //       return 'image/png';
-  //     case 'gif':
-  //       return 'image/gif';
-  //     case 'webp':
-  //       return 'image/webp';
-  //     case 'bmp':
-  //       return 'image/bmp';
-  //     default:
-  //       return 'image/jpeg';
-  //   }
-  // }
+
 
   void _showImagePickerOptions() {
     showModalBottomSheet(

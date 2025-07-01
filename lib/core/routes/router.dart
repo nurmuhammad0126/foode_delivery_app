@@ -338,23 +338,22 @@ final GoRouter appRouter = GoRouter(
       ),
 );
 
-// Helper funksiya - Authentication route ekanligini tekshirish
-bool _isAuthRoute(String path) {
-  const authRoutes = [
-    AppRoutesNames.login,
-    AppRoutesNames.register,
-    AppRoutesNames.forgetPassword,
-    AppRoutesNames.forgetPasswordOtp,
-    AppRoutesNames.resetPassword,
-    AppRoutesNames.setLocation,
-    AppRoutesNames.uploadImage,
-    AppRoutesNames.verifyBio,
-    AppRoutesNames.paymentType,
-    AppRoutesNames.congrats,
-  ];
+// bool _isAuthRoute(String path) {
+//   const authRoutes = [
+//     AppRoutesNames.login,
+//     AppRoutesNames.register,
+//     AppRoutesNames.forgetPassword,
+//     AppRoutesNames.forgetPasswordOtp,
+//     AppRoutesNames.resetPassword,
+//     AppRoutesNames.setLocation,
+//     AppRoutesNames.uploadImage,
+//     AppRoutesNames.verifyBio,
+//     AppRoutesNames.paymentType,
+//     AppRoutesNames.congrats,
+//   ];
 
-  return authRoutes.any((route) => path.startsWith(route));
-}
+//   return authRoutes.any((route) => path.startsWith(route));
+// }
 
 // Navigation helper funksiyalari
 extension AppRouterExtension on BuildContext {

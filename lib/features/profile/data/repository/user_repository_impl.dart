@@ -8,23 +8,24 @@ class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl(this.dioClient);
 
   @override
-  Future<void> addUser(UserModel user) async {
-    await dioClient.post(NetworkPath.users, user.toJson());
+  Future<String> addUser(UserModel user) async {
+    final response = await dioClient.post(NetworkPath.users, user.toJson());
+    return response.data['name'] ?? response.data['id'];
   }
 
   @override
   Future<UserModel> editUser(String id, UserModel updatedUser) async {
     final response = await dioClient.patch(
-      '${NetworkPath.users}/$id}',
+      '${NetworkPath.users}/$id',
       updatedUser.toJson(),
     );
-    return UserModel.fromJson(response.data);
+    return UserModel.fromJson(response.data, id: id);
   }
 
   @override
   Future<UserModel> getUser(String id) async {
-    final response = await dioClient.get('${NetworkPath.users}/$id}');
-    return UserModel.fromJson(response.data);
+    final response = await dioClient.get('${NetworkPath.users}/$id');
+    return UserModel.fromJson(response.data, id: id);
   }
 
   @override
@@ -36,8 +37,9 @@ class UserRepositoryImpl implements UserRepository {
     }
 
     List<UserModel> users = [];
+
     response.data.forEach((key, value) {
-      users.add(UserModel.fromJson(value));
+      users.add(UserModel.fromJson(value, id: key));
     });
 
     return users;

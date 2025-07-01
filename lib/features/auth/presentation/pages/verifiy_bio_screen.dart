@@ -49,7 +49,6 @@ class _VerifiyBioScreenState extends State<VerifiyBioScreen> {
       _nickNameController.text = user.userName ?? '';
       _phoneNumberController.text = user.phoneNumber ?? '';
       _addressController.text = user.adress ?? '';
-      // Gender va date of birth ma'lumotlari usermodel da yo'q bo'lsa, qo'shish kerak
     }
   }
 

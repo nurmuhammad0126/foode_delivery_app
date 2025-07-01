@@ -7,7 +7,6 @@ import '../datasource/home_datasource.dart';
 import '../models/meal_model.dart';
 import '../models/restoran_model.dart';
 import '../models/review_model.dart';
-import '../models/user_model.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   final HomeDatasourceImpl homeRepositoryImpl;

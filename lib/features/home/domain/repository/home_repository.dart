@@ -6,7 +6,6 @@ import 'package:task_for_uicgroup/features/home/data/repository/repository.dart'
 import '../../data/models/meal_model.dart';
 import '../../data/models/restoran_model.dart';
 import '../../data/models/review_model.dart';
-import '../../data/models/user_model.dart';
 
 abstract class HomeRepository {
   Future<Either<Failure, List<RestaurantModel>>> getRestaurnts();

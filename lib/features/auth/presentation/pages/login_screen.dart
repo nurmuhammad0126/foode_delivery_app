@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
             }
 
             if (state is AuthSuccess) {
-              context.go(AppRoutesNames.home); // Navigate to home
+              context.go(AppRoutesNames.home);
             }
           },
           builder: (context, state) {

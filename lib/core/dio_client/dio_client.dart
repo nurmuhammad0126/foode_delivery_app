@@ -45,22 +45,27 @@ class DioClient {
   }
 
   Future<Response> get(String path) async {
-    return await _dio.get('$path.json');
+    String fullPath = path.startsWith('/') ? path : '/$path';
+    return await _dio.get('$fullPath.json');
   }
 
   Future<Response> post(String path, Map<String, dynamic> data) async {
-    return await _dio.post('$path.json', data: data);
+    String fullPath = path.startsWith('/') ? path : '/$path';
+    return await _dio.post('$fullPath.json', data: data);
   }
 
   Future<Response> put(String path, Map<String, dynamic> data) async {
-    return await _dio.put('$path.json', data: data);
+    String fullPath = path.startsWith('/') ? path : '/$path';
+    return await _dio.put('$fullPath.json', data: data);
   }
 
   Future<Response> patch(String path, Map<String, dynamic> data) async {
-    return await _dio.patch('$path.json', data: data);
+    String fullPath = path.startsWith('/') ? path : '/$path';
+    return await _dio.patch('$fullPath.json', data: data);
   }
 
   Future<Response> delete(String path) async {
-    return await _dio.delete('$path.json');
+    String fullPath = path.startsWith('/') ? path : '/$path';
+    return await _dio.delete('$fullPath.json');
   }
 }

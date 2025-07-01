@@ -133,13 +133,13 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutesNames.setLocation,
       name: AppRoutesNames.setLocation,
-      builder: (context, state) => const SetLoacationScreen(),
+      builder: (context, state) => const SetLocationScreen(),
     ),
 
     GoRoute(
       path: AppRoutesNames.uploadImage,
       name: AppRoutesNames.uploadImage,
-      builder: (context, state) => const UploadeImageScreen(),
+      builder: (context, state) => const UploadImageScreen(),
     ),
 
     GoRoute(
@@ -353,23 +353,22 @@ final GoRouter appRouter = GoRouter(
       ),
 );
 
-// Helper funksiya - Authentication route ekanligini tekshirish
-bool _isAuthRoute(String path) {
-  const authRoutes = [
-    AppRoutesNames.login,
-    AppRoutesNames.register,
-    AppRoutesNames.forgetPassword,
-    AppRoutesNames.forgetPasswordOtp,
-    AppRoutesNames.resetPassword,
-    AppRoutesNames.setLocation,
-    AppRoutesNames.uploadImage,
-    AppRoutesNames.verifyBio,
-    AppRoutesNames.paymentType,
-    AppRoutesNames.congrats,
-  ];
+// bool _isAuthRoute(String path) {
+//   const authRoutes = [
+//     AppRoutesNames.login,
+//     AppRoutesNames.register,
+//     AppRoutesNames.forgetPassword,
+//     AppRoutesNames.forgetPasswordOtp,
+//     AppRoutesNames.resetPassword,
+//     AppRoutesNames.setLocation,
+//     AppRoutesNames.uploadImage,
+//     AppRoutesNames.verifyBio,
+//     AppRoutesNames.paymentType,
+//     AppRoutesNames.congrats,
+//   ];
 
-  return authRoutes.any((route) => path.startsWith(route));
-}
+//   return authRoutes.any((route) => path.startsWith(route));
+// }
 
 // Navigation helper funksiyalari
 extension AppRouterExtension on BuildContext {

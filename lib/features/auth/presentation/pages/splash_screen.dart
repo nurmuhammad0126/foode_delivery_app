@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
-
 import 'package:task_for_uicgroup/core/constants/assets.dart';
 import 'package:task_for_uicgroup/core/routes/route_names.dart';
-import 'package:task_for_uicgroup/core/routes/router.dart';
 import 'package:task_for_uicgroup/features/auth/data/datasource/local_datasource.dart';
+import 'package:task_for_uicgroup/features/profile/data/repository/user_local_repository.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -16,6 +15,7 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   final AuthLocalDatasource authLocalDatasource = AuthLocalDatasource();
+  final UserLocalRepository userLocalRepository = UserLocalRepository();
 
   @override
   void initState() {
@@ -28,18 +28,14 @@ class _SplashPageState extends State<SplashPage> {
 
     final user = FirebaseAuth.instance.currentUser;
     final token = await authLocalDatasource.getToken();
+    final profileCompleted = await userLocalRepository.isProfileCompleted();
 
-    if (user != null && token != null) {
+    if (user != null && token != null && profileCompleted == true) {
       final newToken = await user.getIdToken(true);
       await authLocalDatasource.saveToken(newToken ?? "");
-
-      if (mounted) {
-        context.goToHome();
-      }
+      context.goNamed(AppRoutesNames.home);
     } else {
-      if (mounted) {
-        context.goNamed(AppRoutesNames.onboarding);
-      }
+      if (mounted) context.goNamed(AppRoutesNames.onboarding);
     }
   }
 

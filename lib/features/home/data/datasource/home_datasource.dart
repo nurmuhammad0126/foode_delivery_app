@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:task_for_uicgroup/core/constants/network_path.dart';
 import 'package:task_for_uicgroup/core/dio_client/dio_client.dart';
 import 'package:task_for_uicgroup/features/home/data/models/review_model.dart';
-import 'package:task_for_uicgroup/features/home/data/models/user_model.dart';
+import 'package:task_for_uicgroup/features/profile/data/model/user_model.dart';
 
 import '../models/meal_model.dart';
 import '../models/restoran_model.dart';

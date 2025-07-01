@@ -131,6 +131,7 @@ class WScaleAnimationSimple extends StatefulWidget {
 class _WScaleAnimationSimpleState extends State<WScaleAnimationSimple> {
   bool _isPressed = false;
 
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
